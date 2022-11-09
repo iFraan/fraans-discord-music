@@ -6,8 +6,8 @@ module.exports = new Command({
     description: "Muestra el ping del Bot",
     async run(Bot, message, args) {
         const embed = new EmbedBuilder()
-            .setDescription(` :green_circle: API: **${Bot.ws.ping} ms**`)
-            .setColor('#a83f3f');
+            .setDescription(`**${Bot.ws.ping}** ms`)
+            .setColor('#38af3f');
         await message.reply({ embeds: [embed] });
     }
 });
