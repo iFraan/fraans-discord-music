@@ -22,7 +22,7 @@ class Bot extends Client {
         this.commands = [];
         this.config = {};
         this.player = new Player(this);
-        this.player.use("extractor", extractor);
+        this.player.use("custom", extractor);
         this.requiredVoicePermissions = [
             "ViewChannel",
             "Connect",
