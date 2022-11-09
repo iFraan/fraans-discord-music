@@ -5,7 +5,8 @@
   "description": "A music bot written using discord.js and discord-player",
   "main": "index.js",
   "scripts": {
-    "test": "test.js"
+    "start": "node index.js",
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
