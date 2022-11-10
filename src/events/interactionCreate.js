@@ -26,7 +26,7 @@ module.exports = async (Bot, interaction) => {
             });
 
         const args = interaction.options._hoistedOptions.map(option => option.value);
-        return command.run(Bot, interaction, args, true);
+        return command.run(Bot, interaction, args, { slash: true });
     }
 
     /* ----- Controles ----- */
@@ -52,7 +52,9 @@ module.exports = async (Bot, interaction) => {
                 queue.npmessage.edit({
                     embeds: [
                         {
-                            title: `Reproduciendo ahora`,
+                            author: {
+                                name: `Reproduciendo ahora`
+                            },
                             description: `**[${title}](${queue.current.url})**\nPedido por ${queue.current.requestedBy}\n\n${status == 'paused' ? 'Pausado' : 'Resumido'} por ${interaction.user}`,
                             thumbnail: {
                                 url: `${queue.current.thumbnail}`
@@ -66,15 +68,15 @@ module.exports = async (Bot, interaction) => {
                 break;
             case "buttoncontrol_disconnect":
                 embed.setDescription(`Me desconecté.`);
-                embed.setColor('#44b868');
+                embed.setColor(colors['disconnected']);
                 embed.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
                 queue.destroy(true);
                 break;
             case "buttoncontrol_skip":
-                embed.setDescription(`Salté a **[${queue.current.title}](${queue.current.url})**`);
-                embed.setColor('#44b868');
+                embed.setDescription(`Salté **[${queue.current.title}](${queue.current.url})**`);
+                embed.setColor(colors['skipped']);
                 embed.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
@@ -83,7 +85,7 @@ module.exports = async (Bot, interaction) => {
             case "buttoncontrol_queue":
                 /* run queue command */
                 const cmd = Bot.commands.find(x => x.name.toLowerCase() == 'queue');
-                // cmd.run(Bot, interaction, ["queue"], true);
+                cmd.run(Bot, interaction, ["queue"], { slash: false, isFromButton: true });
                 await interaction.deferUpdate();
                 break;
         }
