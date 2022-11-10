@@ -118,7 +118,7 @@ module.exports = {
                     query = query.split("&")[0];
                 }
                 if (query.startsWith("https") && playdl.yt_validate(query) === "video") {
-                    const info = await Youtube.search(query, { limit: 1, type: "video", safeSearch: true });
+                    const info = await Youtube.search(query, { limit: 1, type: "video", safeSearch: false });
                     if (!info || !info.length)
                         return resolve({ playlist: null, info: null });
 
@@ -145,7 +145,7 @@ module.exports = {
                             duration: track.durationInSec * 1000,
                             thumbnail: track.thumbnails ? track.thumbnails[0] ? track.thumbnails[0].url : null : null,
                             async engine() {
-                                return (await playdl.stream(await Youtube.search(track.url, { limit: 1, type: "video", safeSearch: true }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : `https://youtu.be/Wch3gJG2GJ4`), { discordPlayerCompatibility: true })).stream;
+                                return (await playdl.stream(await Youtube.search(track.url, { limit: 1, type: "video", safeSearch: false }).then(x => x[0] ? `https://youtu.be/${x[0].id}` : `https://youtu.be/Wch3gJG2GJ4`), { discordPlayerCompatibility: true })).stream;
                             },
                             views: track.views,
                             author: track.channel.name,
@@ -168,7 +168,7 @@ module.exports = {
                     return resolve({ playlist: playlist, info: tracks });
                 }
 
-                const search = await Youtube.search(query, { limit: 5, type: "video", safeSearch: true });
+                const search = await Youtube.search(query, { limit: 5, type: "video", safeSearch: false });
 
                 if (search && search.length) {
                     const tracks = search.map(track => {
