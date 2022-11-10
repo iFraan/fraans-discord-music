@@ -27,9 +27,9 @@ module.exports = new Command({
 
         if (slash) await message.deferReply();
         let query = args.join(" ");
-        const searchResult = await Bot.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "custom" })
+        const searchResult = await Bot.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "custom" });
         if (!searchResult || !searchResult.tracks.length)
-            return embedReply('No encontré nada.');
+            return embedReply('No encontré nada. \nProbablemente tenga restricciones de edad o esté bloqueado en este pais.');
 
         const queue = await Bot.player.createQueue(message.guild, {
             metadata: { channel: message.channel },
