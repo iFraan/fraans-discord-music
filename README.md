@@ -3,7 +3,7 @@
 	<a href="https://www.codefactor.io/repository/github/ifraan/fraans-discord-music"><img src="https://www.codefactor.io/repository/github/ifraan/fraans-discord-music/badge" alt="CodeFactor" /></a>
 	<a href="https://github.com/iFraan/fraans-discord-music"><img src="https://badgen.net/github/stars/iFraan/fraans-discord-music?color=yellow" alt="Github Stars"/></a>
 	<a href="https://github.com/iFraan/fraans-discord-music/issues"><img src="https://badgen.net/github/open-issues/iFraan/fraans-discord-music?color=green" alt="Issues"/></a>
-	<h2>A music bot written using discord.js and discord-player</h2>
+	<h2>A music discord bot written using discord.js and discord-player</h2>
 </div>
 
 OS dependencies:
@@ -13,8 +13,9 @@ OS dependencies:
 Package dependencies:
 * discord.js@14
 * discord-player
+* play-dl
 
-Need to create an Discord Application for the BotToken 
+Need to create a Discord Application to get a usable TOKEN
 
 To install use:
 ```shell
