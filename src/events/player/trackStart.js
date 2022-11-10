@@ -1,4 +1,5 @@
 const { colors, components } = require('../../constants');
+const { getTrackTitle } = require('../../utils/player');
 
 module.exports = async (player, queue, track) => {
     try {
@@ -7,9 +8,7 @@ module.exports = async (player, queue, track) => {
         }
         const row = components.ButtonPlayingBar()
         console.log(`[INFO] ${queue.guild.name} está reproduciendo ${track.title}`)
-        const title = ['spotify-custom', 'soundcloud-custom'].includes(track.source)
-            ? `${track.author} - ${track.title}`
-            : `${track.title}`;
+        const title = getTrackTitle(track);
         queue.metadata.channel.send({
             embeds: [
                 {

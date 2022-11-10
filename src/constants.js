@@ -6,7 +6,8 @@ const colors = {
     'paused': 0x946828,
     'queue': 0xb84e44,
     'skipped': 0x44b868,
-    'disconnected': 0x44b868
+    'disconnected': 0x44b868,
+    'light-blue': 0x5488c8,
 }
 
 const components = {

@@ -1,4 +1,5 @@
 const { colors, components } = require('../constants');
+const { getTrackTitle } = require('../utils/player');
 const {
     EmbedBuilder,
     InteractionType,
@@ -47,8 +48,7 @@ module.exports = async (Bot, interaction) => {
                     queue.setPaused(false);
                     status = "resumed";
                 }
-                const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
-                    `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
+                const title = getTrackTitle(queue.current);
                 queue.npmessage.edit({
                     embeds: [
                         {
