@@ -1,6 +1,8 @@
+const { colors, components } = require('../constants');
 const {
     EmbedBuilder,
     InteractionType,
+    ComponentType
 } = require('discord.js');
 
 module.exports = async (Bot, interaction) => {
@@ -10,7 +12,7 @@ module.exports = async (Bot, interaction) => {
     /* Si no tengo permisos para hablar en el canal de texto */
     if (!interaction.guild.members.me.permissionsIn(interaction.channel).has(Bot.requiredTextPermissions)) return;
 
-    /* Slash commands */
+    /* ----- Slash commands ----- */
     if (interaction.type === InteractionType.ApplicationCommand && !interaction.user.bot && interaction.guild) {
         const command = Bot.commands.find(cmd => cmd.name.toLowerCase() == interaction.commandName);
         if (!command) return;
@@ -25,5 +27,65 @@ module.exports = async (Bot, interaction) => {
 
         const args = interaction.options._hoistedOptions.map(option => option.value);
         return command.run(Bot, interaction, args, true);
+    }
+
+    /* ----- Controles ----- */
+    if (interaction.componentType === ComponentType.Button && interaction.customId.includes("buttoncontrol")) {
+        const queue = Bot.player.getQueue(interaction.guild);
+        if (!queue || !queue.playing || !interaction.member.voice.channelId || (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId))
+            return;
+        const _isPaused = queue.connection.paused;
+        const embed = new EmbedBuilder();
+        switch (interaction.customId) {
+            case "buttoncontrol_play":
+                const row = components.ButtonPlayingBar(_isPaused)
+                let status;
+                if (!_isPaused) {
+                    queue.setPaused(true);
+                    status = "paused";
+                } else {
+                    queue.setPaused(false);
+                    status = "resumed";
+                }
+                const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
+                    `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
+                queue.npmessage.edit({
+                    embeds: [
+                        {
+                            title: `Reproduciendo ahora`,
+                            description: `**[${title}](${queue.current.url})**\nPedido por ${queue.current.requestedBy}\n\n${status == 'paused' ? 'Pausado' : 'Resumido'} por ${interaction.user}`,
+                            thumbnail: {
+                                url: `${queue.current.thumbnail}`
+                            },
+                            color: _isPaused ? colors['now-playing'] : colors['paused'],
+                        }
+                    ],
+                    components: [row]
+                });
+                await interaction.deferUpdate();
+                break;
+            case "buttoncontrol_disconnect":
+                embed.setDescription(`Me desconecté.`);
+                embed.setColor('#44b868');
+                embed.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() });
+                interaction.channel.send({ embeds: [embed] });
+                await interaction.deferUpdate();
+                queue.destroy(true);
+                break;
+            case "buttoncontrol_skip":
+                embed.setDescription(`Salté a **[${queue.current.title}](${queue.current.url})**`);
+                embed.setColor('#44b868');
+                embed.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() });
+                interaction.channel.send({ embeds: [embed] });
+                await interaction.deferUpdate();
+                queue.skip();
+                break;
+            case "buttoncontrol_queue":
+                /* run queue command */
+                const cmd = Bot.commands.find(x => x.name.toLowerCase() == 'queue');
+                // cmd.run(Bot, interaction, ["queue"], true);
+                await interaction.deferUpdate();
+                break;
+        }
     }
 };
