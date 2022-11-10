@@ -6,8 +6,9 @@ module.exports = new Command({
     options: [
         { description: 'nombre de la canción/URL', name: 'busqueda', required: true, type: 3 }
     ],
-    async run(Bot, message, args, slash) {
+    async run(Bot, message, args, extra = {}) {
 
+        const { slash } = extra;
         const embedReply = (description) => {
             const embed = { embeds: [{ description }], ephemeral: true, failIfNotExists: false }
             return slash ? message.editReply(embed) : message.reply(embed);
