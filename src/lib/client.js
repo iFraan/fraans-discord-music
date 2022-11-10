@@ -3,8 +3,7 @@ const { Client, GatewayIntentBits } = require("discord.js");
 const { Player } = require("discord-player");
 const Constants = require("../constants");
 const extractor = require("../utils/extractor.js");
-const { DiscordAPI } = require("../utils")
-
+const { DiscordAPI } = require("../utils");
 
 class Bot extends Client {
     constructor() {

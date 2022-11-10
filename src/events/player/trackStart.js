@@ -3,7 +3,7 @@ const { colors, components } = require('../../constants');
 module.exports = async (player, queue, track) => {
     try {
         if (queue.npmessage && queue.npmessage.editable) {
-            queue.npmessage.delete().catch(error => { });
+            queue.npmessage.delete().catch(() => { });
         }
         const row = components.ButtonPlayingBar()
         console.log(`[INFO] ${queue.guild.name} está reproduciendo ${track.title}`)
@@ -13,8 +13,10 @@ module.exports = async (player, queue, track) => {
         queue.metadata.channel.send({
             embeds: [
                 {
-                    title: `Reproduciendo ahora`,
-                    description: `**[${title}](${track.url})** - ${track.requestedBy}`,
+                    author: {
+                        name: `Reproduciendo ahora`
+                    },
+                    description: `**[${title}](${track.url})**\nPedido por ${track.requestedBy}`,
                     thumbnail: {
                         url: `${track.thumbnail}`
                     },
