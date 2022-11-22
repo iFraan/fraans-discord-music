@@ -16,8 +16,13 @@ const publishSlashCommands = async (commands) => {
     } catch (e) {
         console.error(e)
     }
+};
+
+const avatarUrlFrom = ({ id, avatar }) => {
+    return `https://cdn.discordapp.com/avatars/${id}/${avatar}.webp`
 }
 
 module.exports = {
     publishSlashCommands,
+    avatarUrlFrom,
 }

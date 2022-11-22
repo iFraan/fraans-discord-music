@@ -14,6 +14,7 @@ module.exports = new Command({
             return slash ? message.editReply(embed) : message.reply(embed);
         }
 
+        if (slash) await message.deferReply();
         if (!message.member.voice.channelId)
             return embedReply('No estás en un VC.');
         if (message.guild.members.me.voice.channelId && message.member.voice.channelId !== message.guild.members.me.voice.channelId)
@@ -25,7 +26,6 @@ module.exports = new Command({
         if (!message.guild.members.me.permissionsIn(message.member.voice.channel).has(Bot.requiredVoicePermissions))
             return embedReply('El bot no tiene permisos para entrar al canal de voz.');
 
-        if (slash) await message.deferReply();
         let query = args.join(" ");
         const searchResult = await Bot.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "custom" });
         if (!searchResult || !searchResult.tracks.length)
