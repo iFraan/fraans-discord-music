@@ -1,5 +1,6 @@
 const Command = require("../structures/command.js");
-const { colors, components } = require("../constants")
+const { colors } = require("../constants");
+const { EmbedPages } = require("../lib/components");
 const { getTrackTitle } = require('../utils/player');
 const { EmbedBuilder } = require('discord.js');
 
@@ -55,6 +56,6 @@ module.exports = new Command({
             }
         } while (!emptypage);
 
-        components.EmbedPages(message, pages, { timeout: 40000, fromButton: isFromButton });
+        EmbedPages(message, pages, { timeout: 40000, fromButton: isFromButton });
     }
 });

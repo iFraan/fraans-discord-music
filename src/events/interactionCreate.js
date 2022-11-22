@@ -1,5 +1,5 @@
-const { colors, components } = require('../constants');
-const { getTrackTitle } = require('../utils/player');
+const { EmbedNowPlaying } = require('../lib/components');
+const { colors } = require('../constants');
 const {
     EmbedBuilder,
     InteractionType,
@@ -39,7 +39,6 @@ module.exports = async (Bot, interaction) => {
         const embed = new EmbedBuilder();
         switch (interaction.customId) {
             case "buttoncontrol_play":
-                const row = components.ButtonPlayingBar(_isPaused)
                 let status;
                 if (!_isPaused) {
                     queue.setPaused(true);
@@ -48,28 +47,18 @@ module.exports = async (Bot, interaction) => {
                     queue.setPaused(false);
                     status = "resumed";
                 }
-                const title = getTrackTitle(queue.current);
-                queue.npmessage.edit({
-                    embeds: [
-                        {
-                            author: {
-                                name: `Reproduciendo ahora`
-                            },
-                            description: `**[${title}](${queue.current.url})**\nPedido por ${queue.current.requestedBy}\n\n${status == 'paused' ? 'Pausado' : 'Resumido'} por ${interaction.user}`,
-                            thumbnail: {
-                                url: `${queue.current.thumbnail}`
-                            },
-                            color: _isPaused ? colors['now-playing'] : colors['paused'],
-                        }
-                    ],
-                    components: [row]
-                });
+                queue.npmessage.edit(EmbedNowPlaying({
+                    track: queue.current,
+                    isPlaying: _isPaused,
+                    status,
+                    interaction
+                }));
                 await interaction.deferUpdate();
                 break;
             case "buttoncontrol_disconnect":
-                embed.setDescription(`Me desconecté.`);
+                embed.setDescription(`Me salí del canal de voz.`);
                 embed.setColor(colors['disconnected']);
-                embed.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() });
+                embed.setFooter({ text: `Me desconectó ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
                 queue.destroy(true);
@@ -77,7 +66,7 @@ module.exports = async (Bot, interaction) => {
             case "buttoncontrol_skip":
                 embed.setDescription(`Salté **[${queue.current.title}](${queue.current.url})**`);
                 embed.setColor(colors['skipped']);
-                embed.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() });
+                embed.setFooter({ text: `Skipeada por ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
                 queue.skip();
