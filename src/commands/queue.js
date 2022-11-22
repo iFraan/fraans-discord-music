@@ -1,5 +1,7 @@
 const Command = require("../structures/command.js");
-const { colors, components } = require("../constants")
+const { colors } = require("../constants");
+const { EmbedPages } = require("../lib/components");
+const { getTrackTitle } = require('../utils/player');
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = new Command({
@@ -22,8 +24,7 @@ module.exports = new Command({
             const pageStart = 10 * (page - 1);
             const pageEnd = pageStart + 10;
             const tracks = queue.tracks.slice(pageStart, pageEnd).map((m, i) => {
-                const title = ['spotify-custom', 'soundcloud-custom'].includes(m.source) ?
-                    `${m.author} - ${m.title}` : `${m.title}`;
+                const title = getTrackTitle(m);
                 return `**${i + pageStart + 1}**. [${title}](${m.url}) ${m.duration} - ${m.requestedBy}`;
             });
             if (tracks.length) {
@@ -34,8 +35,7 @@ module.exports = new Command({
                     }`);
                 if (page % 2 === 0) embed.setColor(colors['queue']);
                 else embed.setColor(colors['queue']);
-                const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
-                    `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
+                const title = getTrackTitle(queue.current);
                 if (page === 1) embed.setAuthor({ name: `Reproduciendo: ${title}`, iconURL: null, url: `${queue.current.url}` });
                 pages.push(embed);
                 page++;
@@ -46,8 +46,7 @@ module.exports = new Command({
                     const embed = new EmbedBuilder();
                     embed.setColor(colors['queue']);
                     embed.setDescription(`${usedby}No hay mas canciones en la lista.`);
-                    const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
-                        `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
+                    const title = getTrackTitle(queue.current);
                     embed.setAuthor({ name: `Reproduciendo: ${title}`, iconURL: null, url: `${queue.current.url}` });
                     return isFromButton ? message.channel.send({ embeds: [embed] }) : message.reply({ embeds: [embed] });
                 }
@@ -57,6 +56,6 @@ module.exports = new Command({
             }
         } while (!emptypage);
 
-        components.EmbedPages(message, pages, { timeout: 40000, fromButton: isFromButton });
+        EmbedPages(message, pages, { timeout: 40000, fromButton: isFromButton });
     }
 });
