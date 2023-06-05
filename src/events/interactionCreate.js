@@ -36,10 +36,10 @@ module.exports = async (Bot, interaction) => {
             case "buttoncontrol_play":
                 let status;
                 if (!_isPaused) {
-                    queue.setPaused(true);
+                    queue.node.pause();
                     status = "paused";
                 } else {
-                    queue.setPaused(false);
+                    queue.node.resume();;
                     status = "resumed";
                 }
                 queue.npmessage.edit(EmbedNowPlaying({
@@ -64,7 +64,7 @@ module.exports = async (Bot, interaction) => {
                 embed.setFooter({ text: `Skipeada por ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
-                queue.skip();
+                queue.node.skip();
                 break;
             case "buttoncontrol_queue":
                 /* run queue command */
