@@ -10,6 +10,7 @@ module.exports = new Command({
     async run(Bot, message, args, extra = {}) {
         const { isFromButton = false } = extra;
         const queue = Bot.player.nodes.get(message.guild);
+        console.log(queue)
         if (!queue || !queue.currentTrack) {
             if (isFromButton) return;
             const embed = new EmbedBuilder();
@@ -19,7 +20,7 @@ module.exports = new Command({
         }
 
         const pages = [];
-        let page = 1, emptypage = false, usedby = isFromButton ? `` : ""; // [${message.member}]\n
+        let page = 1, emptypage = false;
         do {
             const pageStart = 10 * (page - 1);
             const pageEnd = pageStart + 10;
@@ -29,8 +30,8 @@ module.exports = new Command({
             });
             if (tracks.length) {
                 const embed = new EmbedBuilder();
-                embed.setDescription(`${usedby}${tracks.join('\n')}${queue.tracks.length > pageEnd
-                    ? `\n... ${queue.tracks.length - pageEnd} canción(es) mas`
+                embed.setDescription(`${tracks.join('\n')}${queue.tracks.size > pageEnd
+                    ? `\n... ${queue.tracks.size - pageEnd} canción(es) mas`
                     : ''
                     }`);
                 if (page % 2 === 0) embed.setColor(colors['queue']);
