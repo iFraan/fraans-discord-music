@@ -1,10 +1,6 @@
 const { EmbedNowPlaying } = require('../lib/components');
 const { colors } = require('../constants');
-const {
-    EmbedBuilder,
-    InteractionType,
-    ComponentType
-} = require('discord.js');
+const { EmbedBuilder, InteractionType, ComponentType } = require('discord.js');
 
 module.exports = async (Bot, interaction) => {
 
@@ -25,14 +21,13 @@ module.exports = async (Bot, interaction) => {
                         .setDescription(`No tenés permisos suficientes para ejecutar este comando.(\`${command.permission}\`)`)
                 ]
             });
-
         const args = interaction.options._hoistedOptions.map(option => option.value);
         return command.run(Bot, interaction, args, { slash: true });
     }
 
     /* ----- Controles ----- */
     if (interaction.componentType === ComponentType.Button && interaction.customId.includes("buttoncontrol")) {
-        const queue = Bot.player.getQueue(interaction.guild);
+        const queue = Bot.player.nodes.get(interaction.guild);
         if (!queue || !queue.playing || !interaction.member.voice.channelId || (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId))
             return;
         const _isPaused = queue.connection.paused;
@@ -48,7 +43,7 @@ module.exports = async (Bot, interaction) => {
                     status = "resumed";
                 }
                 queue.npmessage.edit(EmbedNowPlaying({
-                    track: queue.current,
+                    track: queue.currentTrack,
                     isPlaying: _isPaused,
                     status,
                     interaction
@@ -61,10 +56,10 @@ module.exports = async (Bot, interaction) => {
                 embed.setFooter({ text: `Me desconectó ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
-                queue.destroy(true);
+                queue.delete(true);
                 break;
             case "buttoncontrol_skip":
-                embed.setDescription(`Salté **[${queue.current.title}](${queue.current.url})**`);
+                embed.setDescription(`Salté **[${queue.currentTrack.title}](${queue.currentTrack.url})**`);
                 embed.setColor(colors['skipped']);
                 embed.setFooter({ text: `Skipeada por ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });

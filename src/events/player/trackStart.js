@@ -13,6 +13,6 @@ module.exports = async (player, queue, track) => {
         })
     } catch (e) {
         console.log(`(${queue.guild.name}) No tengo permisos para este canal de texto.`);
-        return queue.destroy();
+        return queue.delete();
     }
 };

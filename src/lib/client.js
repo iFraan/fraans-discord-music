@@ -21,7 +21,6 @@ class Bot extends Client {
         this.commands = [];
         this.config = {};
         this.player = new Player(this);
-        this.player.use("custom", extractor);
         this.requiredVoicePermissions = [
             "ViewChannel",
             "Connect",
@@ -38,6 +37,8 @@ class Bot extends Client {
     }
 
     async init() {
+        /* load extractors */
+        await this.player.extractors.loadDefault();
         /* load commands */
         await require('./handler/commands')(this);
         /* load events */

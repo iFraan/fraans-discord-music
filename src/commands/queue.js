@@ -9,8 +9,8 @@ module.exports = new Command({
     description: "Muestra la queue actual.",
     async run(Bot, message, args, extra = {}) {
         const { isFromButton = false } = extra;
-        const queue = Bot.player.getQueue(message.guild);
-        if (!queue || !queue.current) {
+        const queue = Bot.player.nodes.get(message.guild);
+        if (!queue || !queue.currentTrack) {
             if (isFromButton) return;
             const embed = new EmbedBuilder();
             embed.setColor(colors['queue']);
@@ -35,8 +35,8 @@ module.exports = new Command({
                     }`);
                 if (page % 2 === 0) embed.setColor(colors['queue']);
                 else embed.setColor(colors['queue']);
-                const title = getTrackTitle(queue.current);
-                if (page === 1) embed.setAuthor({ name: `Reproduciendo: ${title}`, iconURL: null, url: `${queue.current.url}` });
+                const title = getTrackTitle(queue.currentTrack);
+                if (page === 1) embed.setAuthor({ name: `Reproduciendo: ${title}`, iconURL: null, url: `${queue.currentTrack.url}` });
                 pages.push(embed);
                 page++;
             }
@@ -46,8 +46,8 @@ module.exports = new Command({
                     const embed = new EmbedBuilder();
                     embed.setColor(colors['queue']);
                     embed.setDescription(`${usedby}No hay mas canciones en la lista.`);
-                    const title = getTrackTitle(queue.current);
-                    embed.setAuthor({ name: `Reproduciendo: ${title}`, iconURL: null, url: `${queue.current.url}` });
+                    const title = getTrackTitle(queue.currentTrack);
+                    embed.setAuthor({ name: `Reproduciendo: ${title}`, iconURL: null, url: `${queue.currentTrack.url}` });
                     return isFromButton ? message.channel.send({ embeds: [embed] }) : message.reply({ embeds: [embed] });
                 }
                 if (page === 2) {
