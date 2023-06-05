@@ -31,30 +31,30 @@ npm run start
 
 ## Features
 
-| Feature | Status |
-| - | - |
-| Discord Interactions (slash & buttons) | ✅ |
-| Add to Queue | ✅ (see [Sites](#sites))|
-| Controls (pause/skip/resume) | ✅ |
-| Playlist Support | ✅ |
-| Audio Filters | 🗓️ |
-| Skip to | 🗓️ |
-| DJ Roles | ⬜ |
-| Lyrics | ⬜ |
-| AutoPlay (similar tracks after end of queue) | 🗓️ |
-| Multi-Language Support | ⬜ |
+| Feature                                      | Status                  |
+| -------------------------------------------- | ----------------------- |
+| Discord Interactions (slash & buttons)       | ✅                       |
+| Add to Queue                                 | ✅ (see [Sites](#sites)) |
+| Controls (pause/skip/resume)                 | ✅                       |
+| Playlist Support                             | ✅                       |
+| Audio Filters                                | 🗓️                       |
+| Skip to                                      | 🗓️                       |
+| DJ Roles                                     | ⬜                       |
+| Lyrics                                       | ⬜                       |
+| AutoPlay (similar tracks after end of queue) | 🗓️                       |
+| Multi-Language Support                       | ⬜                       |
 
 ## Language Support
-| Language | Status |
-| - | - |
-| Spanish (Argentina) | ✅ |
-| English (US) | ⬜ |
+| Language            | Status |
+| ------------------- | ------ |
+| Spanish (Argentina) | ✅      |
+| English (US)        | ⬜      |
 
 ## Sites
-| Site | Link | Playlist | Search |
-| - | - | - | - |
-| Youtube | ✅ | ✅ | ✅ | 
-| Spotify | ✅ | ✅ | ⬜ | 
-| Soundcloud | ✅ | 🗓️ | ⬜ | 
+| Site       | Link | Playlist | Search |
+| ---------- | ---- | -------- | ------ |
+| Youtube    | ✅    | ✅        | ✅      |
+| Spotify    | ✅    | ✅        | ⬜      |
+| Soundcloud | ✅    | 🗓️        | ⬜      |
 
 ## Disclaimer 
