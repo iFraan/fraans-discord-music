@@ -28,7 +28,7 @@ module.exports = new Command({
             return embedReply('El bot no tiene permisos para entrar al canal de voz.');
 
         const query = args.join(" ");
-        const channel = message.message.member.voice.channel;
+        const channel = message.member.voice.channel;
         const player = useMasterPlayer();
 
         const searchResult = await player.search(query, { requestedBy: slash ? message.user : message.author });
@@ -36,8 +36,6 @@ module.exports = new Command({
         if (!searchResult.hasTracks()) {
             return embedReply('No encontré nada. \nProbablemente tenga restricciones de edad o esté bloqueado en este pais.');
         }
-
-        console.log(searchResult)
 
         try {
             const { track } = await player.play(channel, searchResult, {
@@ -57,31 +55,17 @@ module.exports = new Command({
                 }
             })
 
-            return message.followUp(`**${track.title}** enqueued!`);
+            const playlist = searchResult.playlist;
+
+            playlist
+                ? embedReply(`Puse en cola **${playlist.tracks.length}** canciones de [${playlist.title}](${playlist.url}) (${playlist.source})`)
+                : embedReply(`Puse en cola **[${track.title}](${track.url})** (${track.raw.source})`);
+
         } catch (e) {
             // let's return error if something failed
             console.log(e)
             return message.followUp(`Something went wrong: ${e}`);
         }
 
-        try {
-            if (!queue.connection) {
-                justConnected = true;
-                await queue.connect(message.member.voice.channel);
-            }
-        } catch {
-            Bot.player.deleteQueue(message.guild);
-            return embedReply('No pude joinear tu canal de voz.');
-        }
-
-        searchResult.playlist
-            ? queue.addTracks(searchResult.tracks)
-            : queue.addTrack(searchResult.tracks[0]);
-
-        searchResult.playlist
-            ? embedReply(`Puse en cola **${searchResult.tracks.length}** canciones de [${searchResult.tracks[0].playlist.title}](${searchResult.tracks[0].playlist.url})`)
-            : embedReply(`Puse en cola **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})**`);
-
-        justConnected && queue.play();
     }
 });
