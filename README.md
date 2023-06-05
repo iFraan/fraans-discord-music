@@ -7,22 +7,26 @@
 </div>
 
 ## Dependencies
-OS:
-* Node > 16.x
-* FFMPEG
-  
-Package:
-* discord.js@14
-* discord-player
-* play-dl
 
+OS:
+
+-   Node > 16.x
+-   FFMPEG
+
+Package:
+
+-   discord.js@14
+-   discord-player@6
+-   play-dl
 
 ## Installation
+
 > You need to create a Discord Application to get an usable TOKEN
 
 > Note that Node v16+ is required
 
 To install clone the repository and install the dependencies
+
 ```shell
 git clone https://github.com/iFraan/fraans-discord-music.git
 npm install
@@ -31,8 +35,8 @@ npm run start
 
 ## Features
 
-| Feature                                      | Status                  |
-| -------------------------------------------- | ----------------------- |
+| Feature                                      | Status                   |
+| -------------------------------------------- | ------------------------ |
 | Discord Interactions (slash & buttons)       | ✅                       |
 | Add to Queue                                 | ✅ (see [Sites](#sites)) |
 | Controls (pause/skip/resume)                 | ✅                       |
@@ -45,16 +49,26 @@ npm run start
 | Multi-Language Support                       | ⬜                       |
 
 ## Language Support
+
 | Language            | Status |
 | ------------------- | ------ |
-| Spanish (Argentina) | ✅      |
-| English (US)        | ⬜      |
+| Spanish (Argentina) | ✅     |
+| English (US)        | ⬜     |
 
 ## Sites
-| Site       | Link | Playlist | Search |
-| ---------- | ---- | -------- | ------ |
-| Youtube    | ✅    | ✅        | ✅      |
-| Spotify    | ✅    | ✅        | ⬜      |
-| Soundcloud | ✅    | 🗓️        | ⬜      |
 
-## Disclaimer 
+Extractors are provided by _discord-player_ and can be extended using the [ExtractorAPI](https://discord-player.js.org/docs/guides/creating-extractor)
+Today extractors are:
+
+| Site         | Link | Playlist |
+| ------------ | ---- | -------- |
+| Youtube      | ✅   | ✅       |
+| Spotify      | ✅   | ✅       |
+| AppleMusic   | ✅   | 🗓️       |
+| Vimeo        | ✅   | ⬜       |
+| Reverbnation | ✅   | ⬜       |
+| Soundcloud   | ✅   | 🗓️       |
+
+## Disclaimer
+
+This project is provided completely free "as is", as this was for educational purposes. You are free to copy and modify this software as you see fit.
