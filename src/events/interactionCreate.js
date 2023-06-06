@@ -24,17 +24,13 @@ module.exports = async (Bot, interaction) => {
     /* ----- Controles ----- */
     if (interaction.componentType === ComponentType.Button && interaction.customId.includes('buttoncontrol')) {
         const queue = Bot.player.nodes.get(interaction.guild);
-        if (
-            !queue ||
-            !queue.node.isPlaying() ||
-            !interaction.member.voice.channelId ||
-            (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId)
-        )
+        if (!queue || !interaction.member.voice.channelId || (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId))
             return;
-        const isPlaying = queue.node.isPlaying();
+        const isPlaying = queue.node.isPlaying() ?? false;
         const embed = new EmbedBuilder();
         switch (interaction.customId) {
             case 'buttoncontrol_play':
+                isPlaying ? queue.node.pause() : queue.node.resume();
                 queue.metadata?.nowPlayingMessage.edit(
                     EmbedNowPlaying({
                         track: queue.currentTrack,
