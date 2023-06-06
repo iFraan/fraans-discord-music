@@ -1,4 +1,5 @@
 const Command = require("../structures/command.js");
+const { useMasterPlayer } = require('discord-player');
 
 module.exports = new Command({
     name: "play",
@@ -26,38 +27,45 @@ module.exports = new Command({
         if (!message.guild.members.me.permissionsIn(message.member.voice.channel).has(Bot.requiredVoicePermissions))
             return embedReply('El bot no tiene permisos para entrar al canal de voz.');
 
-        let query = args.join(" ");
-        const searchResult = await Bot.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "custom" });
-        if (!searchResult || !searchResult.tracks.length)
-            return embedReply('No encontré nada. \nProbablemente tenga restricciones de edad o esté bloqueado en este pais.');
+        const query = args.join(" ");
+        const channel = message.member.voice.channel;
+        const player = useMasterPlayer();
 
-        const queue = await Bot.player.createQueue(message.guild, {
-            metadata: { channel: message.channel },
-            bufferingTimeout: 1000,
-            disableVolume: false, // disabling volume controls can improve performance
-            leaveOnEnd: true,
-            leaveOnStop: true,
-            spotifyBridge: false
-        });
-        let justConnected;
-        try {
-            if (!queue.connection) {
-                justConnected = true;
-                await queue.connect(message.member.voice.channel);
-            }
-        } catch {
-            Bot.player.deleteQueue(message.guild);
-            return embedReply('No pude joinear tu canal de voz.');
+        const searchResult = await player.search(query, { requestedBy: slash ? message.user : message.author });
+
+        if (!searchResult.hasTracks()) {
+            return embedReply('No encontré nada. \nProbablemente tenga restricciones de edad o esté bloqueado en este pais.');
         }
 
-        searchResult.playlist
-            ? queue.addTracks(searchResult.tracks)
-            : queue.addTrack(searchResult.tracks[0]);
+        try {
+            const { track } = await player.play(channel, searchResult, {
+                nodeOptions: {
+                    // nodeOptions are the options for guild node (aka your queue in simple word)
+                    metadata: {
+                        message,
+                        requestedBy: slash ? message.user : message.author,
+                        channel: message.channel
+                    }, // we can access this metadata object using queue.metadata later on,
+                    selfDeaf: true,
+                    volume: 80,
+                    leaveOnEmpty: true,
+                    leaveOnEmptyCooldown: 300000,
+                    leaveOnEnd: true,
+                    leaveOnEndCooldown: 300000,
+                }
+            })
 
-        searchResult.playlist
-            ? embedReply(`Puse en cola **${searchResult.tracks.length}** canciones de [${searchResult.tracks[0].playlist.title}](${searchResult.tracks[0].playlist.url})`)
-            : embedReply(`Puse en cola **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})**`);
+            const playlist = searchResult.playlist;
 
-        justConnected && queue.play();
+            playlist
+                ? embedReply(`Puse en cola **${playlist.tracks.length}** canciones de [${playlist.title}](${playlist.url}) (${playlist.source})`)
+                : embedReply(`Puse en cola **[${track.title}](${track.url})** (${track.raw.source})`);
+
+        } catch (e) {
+            // let's return error if something failed
+            console.log(e)
+            return message.followUp(`Something went wrong: ${e}`);
+        }
+
     }
 });

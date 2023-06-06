@@ -25,7 +25,7 @@ module.exports = async (Bot) => {
         for (const file of files) {
             const event = require(`../../events/player/${file}`);
             const eventName = file.split('.')[0];
-            Bot.player.on(eventName, event.bind(null, Bot));
+            Bot.player.events.on(eventName, event.bind(null, Bot));
         }
         console.log(`[INFO] ${files.length} eventos del player cargados.`)
 
