@@ -18,8 +18,8 @@ module.exports = new Command({
             return message.reply({ embeds: [embed] });
         }
 
-        const { isFromButton = false } = extra;
-        const skipTo = message?.options?._hoistedOptions.find((option) => option.name === 'indice');
+        const { isFromButton = false, skipTo: _skipTo } = extra;
+        const skipTo = Number(_skipTo ?? message?.options?._hoistedOptions.find((option) => option.name === 'indice'));
 
         if (skipTo) {
             const index = skipTo > queue.tracks.data.length ? queue.tracks.data.length : skipTo;
@@ -44,19 +44,13 @@ module.exports = new Command({
 
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
-                .setCustomId("skipto_select")
+                .setCustomId("skip")
                 .setPlaceholder('Seleccioná una canción a la que skippear.')
                 .setMaxValues(1)
                 .addOptions(tracks)
         );
 
         const content = {
-            embeds: [
-                {
-                    footer: { text: `Skip | Mostrando las primeras ${tracks.length} canciones.`, iconURL: 'https://cdn-icons-png.flaticon.com/512/183/183625.png' },
-                    color: colors['light-blue']
-                }
-            ],
             components: [row]
         }
         isFromButton

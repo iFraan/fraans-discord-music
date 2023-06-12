@@ -71,4 +71,15 @@ module.exports = async (Bot, interaction) => {
                 break;
         }
     }
+    /* select menu */
+    if (interaction.isStringSelectMenu()) {
+        switch (interaction.customId) {
+            case 'skip':
+                /* run skip command */
+                Bot.commands.find((x) => x.name.toLowerCase() == 'skip')
+                    .run(Bot, interaction, ['skip'], { isFromButton: true, skipTo: interaction.values[0] });
+                await interaction.deferUpdate();
+                break;
+        }
+    }
 };
