@@ -18,7 +18,8 @@ module.exports = new Command({
             return message.reply({ embeds: [embed] });
         }
 
-        const skipTo = message.options._hoistedOptions.find((option) => option.name === 'indice');
+        const { isFromButton = false } = extra;
+        const skipTo = message?.options?._hoistedOptions.find((option) => option.name === 'indice');
 
         if (skipTo) {
             const index = skipTo > queue.tracks.data.length ? queue.tracks.data.length : skipTo;
@@ -28,14 +29,14 @@ module.exports = new Command({
             embed.setColor(colors['skipped']);
             embed.setFooter({ text: `Skipeada por ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
             queue.node.jump(track);
-            return message.reply({ embeds: [embed] });
+            return isFromButton ? message.channel.send({ embeds: [embed] }) : message.reply({ embeds: [embed] });
         }
 
         const tracks = queue.tracks.data.slice(0, 24).map((track, index) => {
             const title = getTrackTitle(track);
             return ({
                 label: title,
-                value: index,
+                value: `${index}`,
                 description: track.author,
             })
         })
@@ -49,7 +50,7 @@ module.exports = new Command({
                 .addOptions(tracks)
         );
 
-        return message.reply({
+        const content = {
             embeds: [
                 {
                     footer: { text: `Skip | Mostrando las primeras ${tracks.length} canciones.`, iconURL: 'https://cdn-icons-png.flaticon.com/512/183/183625.png' },
@@ -57,7 +58,10 @@ module.exports = new Command({
                 }
             ],
             components: [row]
-        });
+        }
+        isFromButton
+            ? message.channel.send(content)
+            : message.reply(content);
     }
 });
 
