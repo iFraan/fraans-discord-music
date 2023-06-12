@@ -12,10 +12,20 @@ module.exports = new Command({
         { description: 'Indice de la canción donde skippear.', name: 'indice', required: false, type: 3 }
     ],
     async run(Bot, message, args, extra = {}) {
+        const reply = (content) => {
+            isFromButton
+                ? message.channel.send(content)
+                : message.reply(content);
+        }
         const queue = useQueue(message.guild);
         if (!queue || !queue.node.isPlaying()) {
             const embed = new EmbedBuilder().setDescription(`No estoy reproduciendo nada en este server.`);
-            return message.reply({ embeds: [embed] });
+            return reply({ embeds: [embed] });
+        }
+
+        if (queue.tracks.data.length === 0) {
+            const embed = new EmbedBuilder().setDescription(`No hay canciones en cola.`);
+            return reply({ embeds: [embed] });
         }
 
         const { isFromButton = false, skipTo: _skipTo } = extra;
@@ -27,9 +37,9 @@ module.exports = new Command({
             const embed = new EmbedBuilder();
             embed.setDescription(`Salté **[${queue.currentTrack.title}](${queue.currentTrack.url})** por **[${track.title}](${track.url})**`);
             embed.setColor(colors['skipped']);
-            embed.setFooter({ text: `Skipeada por ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+            embed.setFooter({ text: `Skipeada por ${message.user.tag}`, iconURL: message.user.displayAvatarURL() });
             queue.node.jump(track);
-            return isFromButton ? message.channel.send({ embeds: [embed] }) : message.reply({ embeds: [embed] });
+            return reply({ embeds: [embed] });
         }
 
         const tracks = queue.tracks.data.slice(0, 24).map((track, index) => {
@@ -45,17 +55,15 @@ module.exports = new Command({
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
                 .setCustomId("skip")
-                .setPlaceholder('Seleccioná una canción a la que skippear.')
+                .setPlaceholder(`Mostrando las primeras ${tracks.length} canciones.`)
                 .setMaxValues(1)
                 .addOptions(tracks)
         );
 
-        const content = {
+        reply({
             components: [row]
-        }
-        isFromButton
-            ? message.channel.send(content)
-            : message.reply(content);
+        })
+
     }
 });
 
