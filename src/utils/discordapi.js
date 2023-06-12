@@ -1,4 +1,4 @@
-const { DISCORD_CLIENT_ID, TOKEN_DISCORD } = require('../keys');
+const { DISCORD_CLIENT_ID, DISCORD_DEV_GUILD_ID, TOKEN_DISCORD } = require('../keys');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v10');
 
@@ -13,6 +13,10 @@ const publishSlashCommands = async (commands) => {
     try {
         await rest.put(Routes.applicationCommands(DISCORD_CLIENT_ID), { body: slashCommands });
         console.log(`[INFO] Comandos publicados en discord.`)
+        if (DISCORD_DEV_GUILD_ID !== '') {
+            await rest.put(Routes.applicationGuildCommands(DISCORD_CLIENT_ID, DISCORD_DEV_GUILD_ID), { body: slashCommands });
+            console.log(`[INFO] Comandos publicados en discord/dev.`)
+        }
     } catch (e) {
         console.error(e)
     }

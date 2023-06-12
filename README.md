@@ -41,27 +41,30 @@ npm run start
 
 ![](screenshots/queue.png)
 
+![](screenshots/skip.png)
+
 ## Features
 
-| Feature                                      | Status                   |
-| -------------------------------------------- | ------------------------ |
+| Feature                                      | Status                  |
+| -------------------------------------------- | ----------------------- |
 | Discord Interactions (slash & buttons)       | ✅                       |
 | Add to Queue                                 | ✅ (see [Sites](#sites)) |
 | Controls (pause/skip/resume)                 | ✅                       |
 | Playlist Support                             | ✅                       |
 | Audio Filters                                | 🗓️                       |
-| Skip to                                      | 🗓️                       |
+| Skip (select menu with queue && number)      | ✅                       |
 | DJ Roles                                     | ⬜                       |
 | Lyrics                                       | 🗓️                       |
-| AutoPlay (similar tracks after end of queue) | ⬜                       |
+| Shuffle                                      | ✅                       |
+| AutoPlay (similar tracks after end of queue) | 🗓️                       |
 | Multi-Language Support                       | ⬜                       |
 
 ## Language Support
 
 | Language            | Status |
 | ------------------- | ------ |
-| Spanish (Argentina) | ✅     |
-| English (US)        | ⬜     |
+| Spanish (Argentina) | ✅      |
+| English (US)        | ⬜      |
 
 ## Sites
 
@@ -70,13 +73,13 @@ Today extractors are:
 
 | Site         | Link | Playlist |
 | ------------ | ---- | -------- |
-| Youtube      | ✅   | ✅       |
-| Spotify      | ✅   | ✅       |
-| AppleMusic   | ✅   | 🗓️       |
-| Vimeo        | ✅   | ⬜       |
-| Reverbnation | ✅   | ⬜       |
-| Soundcloud   | ✅   | 🗓️       |
+| Youtube      | ✅    | ✅        |
+| Spotify      | ✅    | ✅        |
+| AppleMusic   | ✅    | 🗓️        |
+| Vimeo        | ✅    | ⬜        |
+| Reverbnation | ✅    | ⬜        |
+| Soundcloud   | ✅    | 🗓️        |
 
 ## Disclaimer
 
-This project is provided completely free "as is", as this was for educational purposes. You are free to copy and modify this software as you see fit.
+This project is provided completely free "as is" as it was made solely for educational purposes. You are free to copy and modify this software as you see fit.

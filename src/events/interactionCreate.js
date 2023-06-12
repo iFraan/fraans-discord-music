@@ -2,6 +2,8 @@ const { EmbedNowPlaying } = require('../lib/components');
 const { colors } = require('../constants');
 const { EmbedBuilder, InteractionType, ComponentType } = require('discord.js');
 
+// todo: improve/re-factor/re-do handler for interactios
+
 module.exports = async (Bot, interaction) => {
     /* Si no está en la guild (wtf) */
     if (!interaction.inGuild()) return;
@@ -49,7 +51,7 @@ module.exports = async (Bot, interaction) => {
                 await interaction.deferUpdate();
                 queue.delete(true);
                 break;
-            case 'buttoncontrol_skip':
+            case 'buttoncontrol_next':
                 embed.setDescription(`Salté **[${queue.currentTrack.title}](${queue.currentTrack.url})**`);
                 embed.setColor(colors['skipped']);
                 embed.setFooter({ text: `Skipeada por ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
@@ -57,10 +59,27 @@ module.exports = async (Bot, interaction) => {
                 await interaction.deferUpdate();
                 queue.node.skip();
                 break;
+            case 'buttoncontrol_skip':
+                /* run skip command */
+                Bot.commands.find((x) => x.name.toLowerCase() == 'skip')
+                    .run(Bot, interaction, ['skip'], { isFromButton: true });
+                await interaction.deferUpdate();
+                break;
             case 'buttoncontrol_queue':
                 /* run queue command */
-                const cmd = Bot.commands.find((x) => x.name.toLowerCase() == 'queue');
-                cmd.run(Bot, interaction, ['queue'], { slash: false, isFromButton: true });
+                Bot.commands.find((x) => x.name.toLowerCase() == 'queue')
+                    .run(Bot, interaction, ['queue'], { slash: false, isFromButton: true });
+                await interaction.deferUpdate();
+                break;
+        }
+    }
+    /* select menu */
+    if (interaction.isStringSelectMenu()) {
+        switch (interaction.customId) {
+            case 'skip':
+                /* run skip command */
+                Bot.commands.find((x) => x.name.toLowerCase() == 'skip')
+                    .run(Bot, interaction, ['skip'], { isFromButton: true, skipTo: interaction.values[0] });
                 await interaction.deferUpdate();
                 break;
         }
