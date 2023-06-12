@@ -2,6 +2,8 @@ const { EmbedNowPlaying } = require('../lib/components');
 const { colors } = require('../constants');
 const { EmbedBuilder, InteractionType, ComponentType } = require('discord.js');
 
+// todo: improve/re-factor/re-do handler for interactios
+
 module.exports = async (Bot, interaction) => {
     /* Si no está en la guild (wtf) */
     if (!interaction.inGuild()) return;
