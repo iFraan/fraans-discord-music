@@ -51,7 +51,7 @@ npm run start
 | Add to Queue                                 | ✅ (see [Sites](#sites)) |
 | Controls (pause/skip/resume)                 | ✅                       |
 | Playlist Support                             | ✅                       |
-| Audio Filters                                | 🗓️                       |
+| Audio Filters                                | ✅                       |
 | Skip (select menu with queue && number)      | ✅                       |
 | DJ Roles                                     | ⬜                       |
 | Lyrics                                       | 🗓️                       |
