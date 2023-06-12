@@ -12,6 +12,7 @@ module.exports = new Command({
         { description: 'Indice de la canción donde skippear.', name: 'indice', required: false, type: 3 }
     ],
     async run(Bot, message, args, extra = {}) {
+        const { isFromButton = false, skipTo: _skipTo } = extra;
         const reply = (content) => {
             isFromButton
                 ? message.channel.send(content)
@@ -28,10 +29,12 @@ module.exports = new Command({
             return reply({ embeds: [embed] });
         }
 
-        const { isFromButton = false, skipTo: _skipTo } = extra;
-        const skipTo = Number(_skipTo ?? message?.options?._hoistedOptions.find((option) => option.name === 'indice'));
+        const skipTo =
+            (queue.tracks.data.length === 1 ? 0 : undefined) // auto skips when only one song is in queue
+            ?? _skipTo
+            ?? message?.options?._hoistedOptions.find((option) => option.name === 'indice');
 
-        if (skipTo) {
+        if (typeof skipTo !== 'undefined') {
             const index = skipTo > queue.tracks.data.length ? queue.tracks.data.length : skipTo;
             const track = queue.tracks.data[index];
             const embed = new EmbedBuilder();
@@ -42,7 +45,7 @@ module.exports = new Command({
             return reply({ embeds: [embed] });
         }
 
-        const tracks = queue.tracks.data.slice(0, 24).map((track, index) => {
+        const tracks = queue.tracks.data.slice(0, 25).map((track, index) => {
             const title = getTrackTitle(track);
             return ({
                 label: title,
@@ -50,7 +53,6 @@ module.exports = new Command({
                 description: track.author,
             })
         })
-
 
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
@@ -60,7 +62,7 @@ module.exports = new Command({
                 .addOptions(tracks)
         );
 
-        reply({
+        return reply({
             components: [row]
         })
 
