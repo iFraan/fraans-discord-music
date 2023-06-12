@@ -41,6 +41,8 @@ npm run start
 
 ![](screenshots/queue.png)
 
+![](screenshots/skip.png)
+
 ## Features
 
 | Feature                                      | Status                  |
@@ -49,10 +51,11 @@ npm run start
 | Add to Queue                                 | ✅ (see [Sites](#sites)) |
 | Controls (pause/skip/resume)                 | ✅                       |
 | Playlist Support                             | ✅                       |
-| Audio Filters                                | ✅                       |
-| Skip to                                      | 🗓️                       |
+| Audio Filters                                | 🗓️                       |
+| Skip (select menu with queue && number)      | ✅                       |
 | DJ Roles                                     | ⬜                       |
 | Lyrics                                       | 🗓️                       |
+| Shuffle                                      | ✅                       |
 | AutoPlay (similar tracks after end of queue) | 🗓️                       |
 | Multi-Language Support                       | ⬜                       |
 
