@@ -34,6 +34,7 @@ module.exports = new Command({
             ?? _skipTo
             ?? message?.options?._hoistedOptions.find((option) => option.name === 'indice');
 
+        /* typeof so we can pass '0' as the condition */
         if (typeof skipTo !== 'undefined') {
             const index = skipTo > queue.tracks.data.length ? queue.tracks.data.length : skipTo;
             const track = queue.tracks.data[index];
@@ -45,6 +46,7 @@ module.exports = new Command({
             return reply({ embeds: [embed] });
         }
 
+        /* 25 is the max number of options in discord selects */
         const tracks = queue.tracks.data.slice(0, 25).map((track, index) => {
             const title = getTrackTitle(track);
             return ({
