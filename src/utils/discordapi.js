@@ -11,10 +11,12 @@ const publishSlashCommands = async (commands) => {
     }));
     const rest = new REST({ version: '10' }).setToken(TOKEN_DISCORD);
     try {
-        await rest.put(Routes.applicationGuildCommands(DISCORD_CLIENT_ID, DISCORD_DEV_GUILD_ID), { body: slashCommands });
-        console.log(`[INFO] Comandos publicados en discord/dev.`)
         await rest.put(Routes.applicationCommands(DISCORD_CLIENT_ID), { body: slashCommands });
         console.log(`[INFO] Comandos publicados en discord.`)
+        if (DISCORD_DEV_GUILD_ID !== '') {
+            await rest.put(Routes.applicationGuildCommands(DISCORD_CLIENT_ID, DISCORD_DEV_GUILD_ID), { body: slashCommands });
+            console.log(`[INFO] Comandos publicados en discord/dev.`)
+        }
     } catch (e) {
         console.error(e)
     }
