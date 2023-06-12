@@ -33,6 +33,14 @@ npm install
 npm run start
 ```
 
+## Screenshots
+
+![](screenshots/play.png)
+
+![](screenshots/nowplaying.png)
+
+![](screenshots/queue.png)
+
 ## Features
 
 | Feature                                      | Status                   |
@@ -44,8 +52,8 @@ npm run start
 | Audio Filters                                | 🗓️                       |
 | Skip to                                      | 🗓️                       |
 | DJ Roles                                     | ⬜                       |
-| Lyrics                                       | ⬜                       |
-| AutoPlay (similar tracks after end of queue) | 🗓️                       |
+| Lyrics                                       | 🗓️                       |
+| AutoPlay (similar tracks after end of queue) | ⬜                       |
 | Multi-Language Support                       | ⬜                       |
 
 ## Language Support
