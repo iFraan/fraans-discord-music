@@ -13,11 +13,12 @@ module.exports = new Command({
     ],
     async run(Bot, message, args, extra = {}) {
         const { isFromButton = false, skipTo: _skipTo } = extra;
+        const optionsIndex = message?.options?._hoistedOptions.find((option) => option.name === 'indice')
+            ? message?.options?._hoistedOptions.find((option) => option.name === 'indice').value - 1 // as arrays starts in 0
+            : undefined;
         const reply = (content) => {
-            isFromButton
-                ? message.channel.send(content)
-                : message.reply(content);
-        }
+            isFromButton ? message.channel.send(content) : message.reply(content);
+        };
         const queue = useQueue(message.guild);
         if (!queue || !queue.node.isPlaying()) {
             const embed = new EmbedBuilder().setDescription(`No estoy reproduciendo nada en este server.`);
@@ -30,12 +31,12 @@ module.exports = new Command({
         }
 
         const skipTo =
-            (queue.tracks.data.length === 1 ? 0 : undefined) // auto skips when only one song is in queue
-            ?? _skipTo
-            ?? message?.options?._hoistedOptions.find((option) => option.name === 'indice');
+            (queue.tracks.data.length === 1 ? 0 : undefined) ?? // auto skips when only one song is in queue
+            _skipTo ??
+            optionsIndex;
 
         /* typeof so we can pass '0' as the condition */
-        if (typeof skipTo !== 'undefined') {
+        if (typeof skipTo !== 'undefined' && skipTo >= 0) {
             const index = skipTo > queue.tracks.data.length ? queue.tracks.data.length : skipTo;
             const track = queue.tracks.data[index];
             const embed = new EmbedBuilder();
