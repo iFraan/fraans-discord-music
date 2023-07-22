@@ -37,7 +37,7 @@ module.exports = new Command({
 
         /* typeof so we can pass '0' as the condition */
         if (typeof skipTo !== 'undefined' && skipTo >= 0) {
-            const index = skipTo > queue.tracks.data.length ? queue.tracks.data.length : skipTo;
+            const index = skipTo > queue.tracks.data.length ? queue.tracks.data.length - 1 : skipTo;
             const track = queue.tracks.data[index];
             const embed = new EmbedBuilder();
             embed.setDescription(`Salté **[${queue.currentTrack.title}](${queue.currentTrack.url})** por **[${track.title}](${track.url})**`);
