@@ -51,10 +51,10 @@ npm run start
 | Add to Queue                                 | ✅ (see [Sites](#sites)) |
 | Controls (pause/skip/resume)                 | ✅                       |
 | Playlist Support                             | ✅                       |
-| Audio Filters                                | 🗓️                       |
+| Audio Filters                                | ✅                       |
 | Skip (select menu with queue && number)      | ✅                       |
 | DJ Roles                                     | ⬜                       |
-| Lyrics                                       | 🗓️                       |
+| Lyrics                                       | ✅                       |
 | Shuffle                                      | ✅                       |
 | AutoPlay (similar tracks after end of queue) | 🗓️                       |
 | Multi-Language Support                       | ⬜                       |
@@ -68,8 +68,9 @@ npm run start
 
 ## Sites
 
-Extractors are provided by _discord-player_ and can be extended using the [ExtractorAPI](https://discord-player.js.org/docs/guides/creating-extractor)
-Today extractors are:
+Extractors are provided by _discord-player_ and the list can be extended using the [ExtractorAPI](https://discord-player.js.org/docs/guides/creating-extractor)
+
+As of today, current extractors are:
 
 | Site         | Link | Playlist |
 | ------------ | ---- | -------- |
