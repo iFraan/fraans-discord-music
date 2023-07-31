@@ -43,6 +43,10 @@ npm run start
 
 ![](screenshots/skip.png)
 
+![](screenshots/filters_none.png)
+
+![](screenshots/filters_open.png)
+
 ## Features
 
 | Feature                                      | Status                  |
