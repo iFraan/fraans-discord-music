@@ -1,21 +1,27 @@
+const { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder, ApplicationCommandOptionType } = require('discord.js');
 const Command = require("../structures/command.js");
 const { colors } = require('../constants');
 const { useQueue } = require('discord-player');
 const { getTrackTitle } = require('../utils/player');
-const { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder } = require('discord.js');
 
 module.exports = new Command({
     name: "skip",
     aliases: ['skipto'],
     description: "Skippea a una canción que elijas.",
     options: [
-        { description: 'Indice de la canción donde skippear.', name: 'indice', required: false, type: 3 }
+        {
+            description: 'Indice de la canción donde skippear.',
+            name: 'indice',
+            required: false,
+            type: ApplicationCommandOptionType.Integer
+        }
     ],
     async run(Bot, message, args, extra = {}) {
         const { isFromButton = false, skipTo: _skipTo } = extra;
-        const optionsIndex = message?.options?._hoistedOptions.find((option) => option.name === 'indice')
-            ? message?.options?._hoistedOptions.find((option) => option.name === 'indice').value - 1 // as arrays starts in 0
+        const optionsIndex = message?.options?.getInteger('indice')
+            ? message.options.getInteger('indice') - 1
             : undefined;
+
         const reply = (content) => {
             isFromButton ? message.channel.send(content) : message.reply(content);
         };
