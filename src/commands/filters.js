@@ -64,7 +64,6 @@ module.exports = new Command({
         );
 
         return !isFromButton && message.reply({
-            content: 'Seleccioná filtros',
             components: [row]
         })
     },
