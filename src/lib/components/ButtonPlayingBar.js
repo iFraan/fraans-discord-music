@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const { getLanguage } = require("../utils/language");
+const { getLanguage } = require("../../utils/language");
 
 module.exports = ButtonPlayingBar = ({ isPlaying = true, interaction = {}, queue = {} }) => {
     const strings = getLanguage(queue?.guild?.id ?? '');

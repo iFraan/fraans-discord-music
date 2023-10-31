@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, CommandInteraction, ButtonStyle } = require('discord.js');
-const { getLanguage } = require("../utils/language.js");
+const { getLanguage } = require("../../utils/language.js");
 
 /* ref https://github1s.com/nizewn/Dodong/blob/HEAD/utils/embedPages.js */
 

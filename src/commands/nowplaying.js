@@ -47,7 +47,7 @@ module.exports = new Command({
                             value: progress.replace(/ 0:00/g, ' ◉ LIVE'),
                         },
                     ],
-                    footer: { text: `Fraan's Music | ${strings.generics.playing} ${strings.generics.now}`, iconURL: 'https://cdn-icons-png.flaticon.com/512/183/183625.png' },
+                    footer: { text: `Fraan's Music | ${strings.generics.playingNow}`, iconURL: 'https://cdn-icons-png.flaticon.com/512/183/183625.png' },
                     color: colors['now-playing'],
                 },
             ],
