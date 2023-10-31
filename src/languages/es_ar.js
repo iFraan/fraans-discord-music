@@ -28,10 +28,19 @@ module.exports = {
         chooseLang: 'Elegí un idioma.',
         chooseFilter: 'Activá o desactivá filtros.'
     },
+    actions: {
+        pause: 'Pausar',
+        resume: 'Resumir',
+        skip: 'Skippear',
+        disconnect: 'Desconectar',
+        showQueue: 'Mostrar Queue',
+    },
     generics: {
         playing: 'Reproduciendo',
         help: 'Ayuda',
-        now: 'ahora',
         views: 'Views',
+        page: 'Pagina',
+        now: 'ahora',
+        of: 'de'
     }
 }

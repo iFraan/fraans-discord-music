@@ -42,6 +42,7 @@ module.exports = async (Bot, interaction) => {
                         isPlaying: !isPlaying,
                         status: isPlaying ? 'paused' : 'resumed',
                         interaction,
+                        queue,
                     })
                 );
                 await interaction.deferUpdate();

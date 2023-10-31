@@ -3,8 +3,8 @@ const { getTrackTitle } = require('../../utils/player');
 const { avatarUrlFrom } = require('../../utils/discordapi');
 const { colors } = require('../../constants');
 
-module.exports = EmbedNowPlaying = ({ track, isPlaying = true, status, interaction = {} }) => {
-    const row = ButtonPlayingBar(isPlaying);
+module.exports = EmbedNowPlaying = ({ track, isPlaying = true, status, interaction = {}, queue }) => {
+    const row = ButtonPlayingBar({ isPlaying, interaction, queue });
     const title = getTrackTitle(track);
     const description = [`**[${title}](${track.url})** (${track.duration})`];
     status && description.push(`${status == 'paused' ? 'Pausado' : 'Resumido'} por ${interaction?.user}`);
