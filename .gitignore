@@ -5,3 +5,8 @@ keys.json
 
 # 
 .env
+
+# db
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal

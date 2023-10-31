@@ -7,7 +7,8 @@ module.exports = async (player, queue, track) => {
         }
         console.log(`[INFO] ${queue.guild.name} está reproduciendo ${track.title}`)
         const message = await queue.metadata.channel.send(EmbedNowPlaying({
-            track
+            track,
+            queue
         }));
         queue.setMetadata({
             ...queue.metadata,

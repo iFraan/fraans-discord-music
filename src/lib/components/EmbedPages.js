@@ -1,4 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, CommandInteraction, ButtonStyle } = require('discord.js');
+const { getLanguage } = require("../../utils/language.js");
 
 /* ref https://github1s.com/nizewn/Dodong/blob/HEAD/utils/embedPages.js */
 
@@ -11,9 +12,11 @@ module.exports = EmbedPages = async (source, pages, options) => {
     ];
     const row = new ActionRowBuilder().addComponents(buttons);
 
+    const strings = getLanguage(source.guild.id);
+
     let currentPage = 0;
     let content = {
-        embeds: [pages[currentPage].setFooter({ text: `Pagina ${currentPage + 1} de ${pages.length}` })],
+        embeds: [pages[currentPage].setFooter({ text: `${strings.generics.page} ${currentPage + 1} ${strings.generics.of} ${pages.length}` })],
         components: [row],
     };
 
@@ -50,7 +53,7 @@ module.exports = EmbedPages = async (source, pages, options) => {
                 break;
         }
         pagedMessage.edit({
-            embeds: [pages[currentPage].setFooter({ text: `Pagina ${currentPage + 1} de ${pages.length}` })],
+            embeds: [pages[currentPage].setFooter({ text: `${strings.generics.page} ${currentPage + 1} ${strings.generics.of} ${pages.length}` })],
             components: [row],
         });
         collector.resetTimer();
@@ -62,10 +65,10 @@ module.exports = EmbedPages = async (source, pages, options) => {
             row.setComponents(buttons[0].setDisabled(true), buttons[1].setDisabled(true), buttons[2].setDisabled(true), buttons[3].setDisabled(true));
             pagedMessage
                 .edit({
-                    embeds: [pages[currentPage].setFooter({ text: `Pagina ${currentPage + 1} de ${pages.length}` })],
+                    embeds: [pages[currentPage].setFooter({ text: `${strings.generics.page} ${currentPage + 1} ${strings.generics.of} ${pages.length}` })],
                     components: [row],
                 })
-                .catch((error) => {});
+                .catch((error) => { });
         }
     });
     return pagedMessage;

@@ -3,6 +3,7 @@ const Command = require("../structures/command.js");
 const { colors } = require('../constants');
 const { useQueue } = require('discord-player');
 const { getTrackTitle } = require('../utils/player');
+const { getLanguage } = require("../utils/language");
 
 module.exports = new Command({
     name: "skip",
@@ -17,6 +18,7 @@ module.exports = new Command({
         }
     ],
     async run(Bot, message, args, extra = {}) {
+        const strings = getLanguage(message.guild.id);
         const { isFromButton = false, skipTo: _skipTo } = extra;
         const optionsIndex = message?.options?.getInteger('indice')
             ? message.options.getInteger('indice') - 1
@@ -27,12 +29,12 @@ module.exports = new Command({
         };
         const queue = useQueue(message.guild);
         if (!queue || !queue.node.isPlaying()) {
-            const embed = new EmbedBuilder().setDescription(`No estoy reproduciendo nada en este server.`);
+            const embed = new EmbedBuilder().setDescription(strings.notPlaying);
             return reply({ embeds: [embed] });
         }
 
         if (queue.tracks.data.length === 0) {
-            const embed = new EmbedBuilder().setDescription(`No hay canciones en cola.`);
+            const embed = new EmbedBuilder().setDescription(strings.emptyQueue);
             return reply({ embeds: [embed] });
         }
 
@@ -46,9 +48,15 @@ module.exports = new Command({
             const index = skipTo > queue.tracks.data.length ? queue.tracks.data.length - 1 : skipTo;
             const track = queue.tracks.data[index];
             const embed = new EmbedBuilder();
-            embed.setDescription(`Salté **[${queue.currentTrack.title}](${queue.currentTrack.url})** por **[${track.title}](${track.url})**`);
+            embed.setDescription(
+                strings.skippedFor
+                    .replace('{CURRENT_TRACK_TITLE}', queue.currentTrack.title)
+                    .replace('{CURRENT_TRACK_URL}', queue.currentTrack.url)
+                    .replace('{TRACK_TITLE}', track.title)
+                    .replace('{TRACK_URL}', track.url)
+            );
             embed.setColor(colors['skipped']);
-            embed.setFooter({ text: `Skipeada por ${message.user.tag}`, iconURL: message.user.displayAvatarURL() });
+            embed.setFooter({ text: `${strings.skippedBy} ${message.user.tag}`, iconURL: message.user.displayAvatarURL() });
             queue.node.jump(track);
             return reply({ embeds: [embed] });
         }
@@ -66,7 +74,10 @@ module.exports = new Command({
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
                 .setCustomId("skip")
-                .setPlaceholder(`Mostrando las primeras ${tracks.length} canciones.`)
+                .setPlaceholder(
+                    strings.skipList
+                        .replace('{SONGS_QUANTITY}', tracks.length)
+                )
                 .setMaxValues(1)
                 .addOptions(tracks)
         );
