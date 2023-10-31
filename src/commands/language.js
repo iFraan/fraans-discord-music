@@ -3,8 +3,8 @@ const Command = require('../structures/command.js');
 const GuildDB = require('../db/guilds.js');
 const { getLanguage } = require("../utils/language");
 const LANGUAGES = [
-    { label: 'Español Argentino', value: 'es_ar' },
-    { label: 'English', value: 'en' },
+    { label: 'Español (Argentina)', value: 'es_ar' },
+    { label: 'Español (España)', value: 'es_es' },
 ];
 
 module.exports = new Command({
