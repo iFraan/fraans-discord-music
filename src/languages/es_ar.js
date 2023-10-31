@@ -7,4 +7,7 @@ module.exports = {
     },
     addedToQueuePlaylist: "Puse en cola **{SONGS_QUANTITY}** canciones de [{PLAYLIST_TITLE}]({PLAYLIST_URL}) ({PLAYLIST_SOURCE})",
     addedToQueueSong: "Puse en cola **[{TRACK_TITLE}]({TRACK_URL})** ({TRACK_SOURCE})",
+    placeholders: {
+        chooseLang: 'Elegí un idioma.'
+    }
 }

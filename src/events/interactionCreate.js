@@ -88,6 +88,12 @@ module.exports = async (Bot, interaction) => {
                     .run(Bot, interaction, ['filters'], { isFromButton: true, selectedFilters: interaction.values });
                 await interaction.deferUpdate();
                 break;
+            case 'languages':
+                /* run skip command */
+                Bot.commands.find((x) => x.name.toLowerCase() == 'languages')
+                    .run(Bot, interaction, ['languages'], { isFromButton: true, selectedLang: interaction.values });
+                await interaction.deferUpdate();
+                break;
         }
     }
 };
