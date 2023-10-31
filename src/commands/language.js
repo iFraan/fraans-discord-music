@@ -5,6 +5,7 @@ const { getLanguage } = require("../utils/language");
 const LANGUAGES = [
     { label: 'Español (Argentina)', value: 'es_ar' },
     { label: 'Español (España)', value: 'es_es' },
+    { label: 'English (US)', value: 'en_us' },
 ];
 
 module.exports = new Command({
