@@ -1,6 +1,6 @@
 const Command = require("../structures/command.js");
 const { useMainPlayer } = require('discord-player');
-const { getLanguage } = require('../utils/language.js');
+const { getLanguage } = require('../utils/language');
 
 module.exports = new Command({
     name: 'play',

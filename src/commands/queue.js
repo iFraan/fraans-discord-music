@@ -2,19 +2,21 @@ const Command = require('../structures/command.js');
 const { colors } = require('../constants');
 const { EmbedPages } = require('../lib/components');
 const { getTrackTitle } = require('../utils/player');
+const { getLanguage } = require("../utils/language");
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = new Command({
     name: 'queue',
     description: 'Muestra la queue actual.',
     async run(Bot, message, args, extra = {}) {
+        const strings = getLanguage(message.guild.id)
         const { isFromButton = false } = extra;
         const queue = Bot.player.nodes.get(message.guild);
         if (!queue || !queue.currentTrack) {
             if (isFromButton) return;
             const embed = new EmbedBuilder();
             embed.setColor(colors['queue']);
-            embed.setDescription(`No hay canciones en la queue.`);
+            embed.setDescription(strings.emptyQueue);
             return message.reply({ embeds: [embed] });
         }
 
@@ -31,7 +33,7 @@ module.exports = new Command({
             if (tracks.length) {
                 const embed = new EmbedBuilder();
                 const title = getTrackTitle(queue.currentTrack);
-                embed.setAuthor({ name: `Reproduciendo: ${title}`, iconURL: queue.currentTrack.thumbnail ?? null, url: `${queue.currentTrack.url}` });
+                embed.setAuthor({ name: `${strings.generics.playing}: ${title}`, iconURL: queue.currentTrack.thumbnail ?? null, url: `${queue.currentTrack.url}` });
                 embed.setDescription(`${tracks.join('\n')}${queue.tracks.size > pageEnd ? `\n... ${queue.tracks.size - pageEnd} canción(es) mas` : ''}`);
                 embed.setColor(colors['queue']);
                 pages.push(embed);
@@ -41,9 +43,9 @@ module.exports = new Command({
                 if (page === 1) {
                     const embed = new EmbedBuilder();
                     const title = getTrackTitle(queue.currentTrack);
-                    embed.setAuthor({ name: `Reproduciendo: ${title}`, iconURL: null, url: `${queue.currentTrack.url}` });
+                    embed.setAuthor({ name: `${strings.generics.playing}: ${title}`, iconURL: null, url: `${queue.currentTrack.url}` });
                     embed.setColor(colors['queue']);
-                    embed.setDescription(`No hay mas canciones en la lista.`);
+                    embed.setDescription(strings.emptyQueue);
                     return isFromButton ? message.channel.send({ embeds: [embed] }) : message.reply({ embeds: [embed] });
                 }
                 if (page === 2) {

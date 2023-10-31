@@ -3,6 +3,7 @@ const { ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
 const { useQueue } = require('discord-player');
 const { lyricsExtractor } = require("@discord-player/extractor");
 const lyricsFinder = lyricsExtractor();
+const { getLanguage } = require("../utils/language");
 
 module.exports = new Command({
     name: "lyrics",
@@ -20,6 +21,8 @@ module.exports = new Command({
 
         message.deferReply && await message.deferReply(); // if interaction
 
+        const strings = getLanguage(message.guild.id);
+
         const reply = (content) => {
             return isFromButton
                 ? message.channel.send(content)
@@ -29,7 +32,7 @@ module.exports = new Command({
         const queue = useQueue(message.guild);
         const query = message.options.getString("busqueda", false) ?? queue?.currentTrack?.title;
 
-        if (!query) return reply({ embeds: [new EmbedBuilder().setDescription(`Te olvidaste de poner una canción para buscar.`)] });
+        if (!query) return reply({ embeds: [new EmbedBuilder().setDescription(strings.lyrics.noArgs)] });
 
         const queryFormated = query
             .toLowerCase()
@@ -41,7 +44,7 @@ module.exports = new Command({
         const result = await lyricsFinder.search(queryFormated).catch(() => null);
 
         if (!result || !result.lyrics) {
-            const embed = new EmbedBuilder().setDescription(`Te olvidaste de poner una canción para buscar.`);
+            const embed = new EmbedBuilder().setDescription(strings.lyrics.notFound);
             return reply({ embeds: [embed] });
         }
 

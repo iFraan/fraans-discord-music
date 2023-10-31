@@ -4,6 +4,7 @@ const {
 } = require("discord.js");
 const Command = require("../structures/command.js");
 const { useQueue } = require("discord-player");
+const { getLanguage } = require("../utils/language");
 const FILTERS = [
     "Bassboost",
     "Chorus",
@@ -40,6 +41,7 @@ module.exports = new Command({
         const { isFromButton = false, selectedFilters = [] } = extra;
 
         const queue = useQueue(message.guild);
+        const strings = getLanguage(message.guild.id);
 
         queue.filters.ffmpeg.setFilters(selectedFilters)
 
@@ -51,7 +53,7 @@ module.exports = new Command({
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
                 .setCustomId("filters")
-                .setPlaceholder(`Activá o desactivá filtros.`)
+                .setPlaceholder(strings.placeholders.chooseFilter)
                 .setMaxValues(5)
                 .addOptions(FILTERS.map((filter) => {
                     const isEnabled = !!filters.enabled.find((item) => item === filter.toLowerCase());

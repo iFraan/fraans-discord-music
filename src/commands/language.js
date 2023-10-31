@@ -1,7 +1,7 @@
 const { ActionRowBuilder, StringSelectMenuBuilder, } = require("discord.js");
 const Command = require('../structures/command.js');
 const GuildDB = require('../db/guilds.js');
-const { getLanguage } = require("../utils/language.js");
+const { getLanguage } = require("../utils/language");
 const LANGUAGES = [
     { label: 'Español Argentino', value: 'es_ar' },
     { label: 'English', value: 'en' },
