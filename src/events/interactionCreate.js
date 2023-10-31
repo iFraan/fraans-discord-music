@@ -1,6 +1,7 @@
 const { EmbedNowPlaying } = require('../lib/components');
 const { colors } = require('../constants');
 const { EmbedBuilder, InteractionType, ComponentType } = require('discord.js');
+const { getLanguage } = require("../utils/language.js");
 
 // todo: improve/re-factor/re-do handler for interactios
 
@@ -10,6 +11,8 @@ module.exports = async (Bot, interaction) => {
     /* Si no tengo permisos para hablar en el canal de texto */
     if (!interaction.guild.members.me.permissionsIn(interaction.channel).has(Bot.requiredTextPermissions)) return;
 
+    const strings = getLanguage(interaction.guild.id);
+
     /* ----- Slash commands ----- */
     if (interaction.type === InteractionType.ApplicationCommand && !interaction.user.bot && interaction.guild) {
         const command = Bot.commands.find((cmd) => cmd.name.toLowerCase() == interaction.commandName);
@@ -17,7 +20,7 @@ module.exports = async (Bot, interaction) => {
         /* Si el user no tiene permisos para ese comando */
         if (!interaction.member.permissionsIn(interaction.channel).has(command.permission))
             return interaction.reply({
-                embeds: [new EmbedBuilder().setDescription(`No tenés permisos suficientes para ejecutar este comando.(\`${command.permission}\`)`)],
+                embeds: [new EmbedBuilder().setDescription(strings.commands.notEnoughPermissions.replace('{PERMISSION}', command.permission))],
             });
         const args = interaction.options._hoistedOptions.map((option) => option.value);
         return command.run(Bot, interaction, args, { slash: true });
@@ -39,20 +42,25 @@ module.exports = async (Bot, interaction) => {
                         isPlaying: !isPlaying,
                         status: isPlaying ? 'paused' : 'resumed',
                         interaction,
+                        queue,
                     })
                 );
                 await interaction.deferUpdate();
                 break;
             case 'buttoncontrol_disconnect':
-                embed.setDescription(`Me salí del canal de voz.`);
+                embed.setDescription(strings.disconnectedFromVc);
                 embed.setColor(colors['disconnected']);
-                embed.setFooter({ text: `Me desconectó ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
+                embed.setFooter({ text: strings.disconnectedBy.replace('{USER}', interaction.user.tag), iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
                 queue.delete(true);
                 break;
             case 'buttoncontrol_next':
-                embed.setDescription(`Salté **[${queue.currentTrack.title}](${queue.currentTrack.url})**`);
+                embed.setDescription(
+                    strings.skippedFor
+                        .replace('{TRACK_TITLE}', queue.currentTrack.title)
+                        .replace('{TRACK_URL}', queue.currentTrack.url)
+                );
                 embed.setColor(colors['skipped']);
                 embed.setFooter({ text: `Skipeada por ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
@@ -86,6 +94,12 @@ module.exports = async (Bot, interaction) => {
                 /* run skip command */
                 Bot.commands.find((x) => x.name.toLowerCase() == 'filters')
                     .run(Bot, interaction, ['filters'], { isFromButton: true, selectedFilters: interaction.values });
+                await interaction.deferUpdate();
+                break;
+            case 'languages':
+                /* run skip command */
+                Bot.commands.find((x) => x.name.toLowerCase() == 'languages')
+                    .run(Bot, interaction, ['languages'], { isFromButton: true, selectedLang: interaction.values });
                 await interaction.deferUpdate();
                 break;
         }

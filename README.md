@@ -61,14 +61,16 @@ npm run start
 | Lyrics                                       | ✅                       |
 | Shuffle                                      | ✅                       |
 | AutoPlay (similar tracks after end of queue) | 🗓️                       |
-| Multi-Language Support                       | ⬜                       |
+| Multi-Language Support                       | ✅                       |
 
 ## Language Support
 
 | Language            | Status |
 | ------------------- | ------ |
 | Spanish (Argentina) | ✅      |
-| English (US)        | ⬜      |
+| Spanish (Spain)     | ✅      |
+| English (US)        | ✅      |
+| German              | ⬜      |
 
 ## Sites
 
