@@ -49,7 +49,7 @@ module.exports = new Command({
             const track = queue.tracks.data[index];
             const embed = new EmbedBuilder();
             embed.setDescription(
-                strings.skipped
+                strings.skippedFor
                     .replace('{CURRENT_TRACK_TITLE}', queue.currentTrack.title)
                     .replace('{CURRENT_TRACK_URL}', queue.currentTrack.url)
                     .replace('{TRACK_TITLE}', track.title)
