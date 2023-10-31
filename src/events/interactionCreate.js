@@ -11,7 +11,7 @@ module.exports = async (Bot, interaction) => {
     /* Si no tengo permisos para hablar en el canal de texto */
     if (!interaction.guild.members.me.permissionsIn(interaction.channel).has(Bot.requiredTextPermissions)) return;
 
-    const strings = getLanguage(message.guild.id);
+    const strings = getLanguage(interaction.guild.id);
 
     /* ----- Slash commands ----- */
     if (interaction.type === InteractionType.ApplicationCommand && !interaction.user.bot && interaction.guild) {

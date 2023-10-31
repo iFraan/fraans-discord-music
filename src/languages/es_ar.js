@@ -20,6 +20,7 @@ module.exports = {
     skipList: 'Mostrando las primeras {SONGS_QUANTITY} canciones.',
     disconnectedFromVc: 'Me salí del canal de voz.',
     disconnectedBy: 'Me desconectó {USER}',
+    playingNow: 'Reproduciendo ahora',
     lyrics: {
         noArgs: 'Te olvidaste de poner una canción para buscar.',
         notFound: 'No encontré nada, estás seguro que lo escribiste bien?'

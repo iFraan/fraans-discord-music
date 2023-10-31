@@ -12,8 +12,8 @@ module.exports = new Command({
     description: "Cambiá el lenguaje del bot.",
     async run(Bot, message, args, extra = {}) {
 
-        const { isFromButton = false, selectedLangs } = extra;
-        const [selected] = selectedLangs ?? [];
+        const { isFromButton = false, selectedLang } = extra;
+        const [selected] = selectedLang ?? [];
 
         if (isFromButton && selected) {
             return GuildDB.set(message.guild.id, { language: selected });
