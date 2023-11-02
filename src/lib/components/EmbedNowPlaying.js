@@ -5,7 +5,7 @@ const { colors } = require('../../constants');
 const { getLanguage } = require("../../utils/language");
 
 module.exports = EmbedNowPlaying = ({ track, isPlaying = true, status, interaction = {}, queue }) => {
-    const strings = getLanguage(message.guild.id);
+    const strings = getLanguage(queue?.guild?.id ?? '');
     const row = ButtonPlayingBar({ isPlaying, interaction, queue });
     const title = getTrackTitle(track);
     const description = [`**[${title}](${track.url})** (${track.duration})`];

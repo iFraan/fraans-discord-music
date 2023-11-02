@@ -15,6 +15,7 @@ module.exports = async (player, queue, track) => {
             nowPlayingMessage: message
         })
     } catch (e) {
+        queue.metadata.channel.send('Something went wrong while joining!', e.message);
         console.log(`(${queue.guild.name}) No tengo permisos para este canal de texto.`);
         return queue.delete();
     }

@@ -1,8 +1,8 @@
 {
     "name": "fraans-discord-music",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "license": "GPL-3.0",
-    "description": "A music bot written using discord.js and discord-player",
+    "description": "A music bot written using discord.js@14 and discord-player",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
@@ -27,14 +27,14 @@
     },
     "homepage": "https://github.com/iFraan/fraans-discord-music#readme",
     "dependencies": {
-        "@discord-player/extractor": "^4.2.2",
+        "@discord-player/extractor": "^4.4.5",
         "@discordjs/opus": "^0.9.0",
         "@discordjs/voice": "^0.16.0",
-        "discord-player": "^6.6.1",
+        "discord-player": "^6.6.6",
         "discord.js": "^14.11.0",
         "dotenv": "^16.3.1",
         "enmap": "^5.9.8",
-        "ffmpeg-static": "^5.1.0",
-        "play-dl": "^1.9.6"
+        "ffmpeg-static": "^5.2.0",
+        "play-dl": "^1.9.7"
     }
 }
