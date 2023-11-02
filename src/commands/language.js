@@ -6,6 +6,8 @@ const LANGUAGES = [
     { label: 'Español (Argentina)', value: 'es_ar' },
     { label: 'Español (España)', value: 'es_es' },
     { label: 'English (US)', value: 'en_us' },
+    { label: 'German', value: 'de_de' },
+    { label: 'Português (Brasil)', value: 'pt_br' },
 ];
 
 module.exports = new Command({

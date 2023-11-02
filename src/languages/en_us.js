@@ -1,12 +1,12 @@
 module.exports = {
     player: {
-        notInVc: "You aren't in a VC",
-        notSameVc: "We aren't in the same VC",
-        notEnoughPermissions: 'I do not have enough permissions to join this VC.',
-        noTracks: "I didn't find anything. \n Probably this song it's age restricted or it's blocked in this country.",
+        notInVc: 'You are not in a VC',
+        notSameVc: 'You are not in the same VC as me.',
+        notEnoughPermissions: "The bot doesn't have permissions to enter the voice channel.",
+        noTracks: "I couldn't find anything. \nIt may be age-restricted or blocked in this country.",
     },
     commands: {
-        notEnoughPermissions: 'You dont have enough permissions to use this command. (`{PERMISSION}`)',
+        notEnoughPermissions: "You don't have sufficient permissions to execute this command. (`{PERMISSION}`)",
     },
     addedToQueuePlaylist: "I queue'd up **{SONGS_QUANTITY}** songs from [{PLAYLIST_TITLE}]({PLAYLIST_URL}) ({PLAYLIST_SOURCE})",
     addedToQueueSong: "I queue'd up **[{TRACK_TITLE}]({TRACK_URL})** ({TRACK_SOURCE})",
@@ -22,8 +22,8 @@ module.exports = {
     disconnectedBy: 'Was disconnected by {USER}',
     playingNow: 'Playing now',
     lyrics: {
-        noArgs: 'You have to specify the song to search for.',
-        notFound: "Didn't find anything. Are you sure you're writing it right?",
+        noArgs: 'You forgot to provide a song to search for.',
+        notFound: "I couldn't find anything. Are you sure you typed it correctly?",
     },
     placeholders: {
         chooseLang: 'Choose a language.',
