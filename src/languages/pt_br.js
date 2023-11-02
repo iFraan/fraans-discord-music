@@ -1,0 +1,47 @@
+module.exports = {
+    player: {
+        notInVc: 'Você não está em um VC',
+        notSameVc: 'Você não está no mesmo VC que eu.',
+        notEnoughPermissions: 'O bot não possui permissões para entrar no canal de voz.',
+        noTracks: 'Não encontrei nada. \nProvavelmente está restrito por idade ou bloqueado neste país.',
+    },
+    commands: {
+        notEnoughPermissions: 'Você não possui permissões suficientes para executar este comando. (`{PERMISSION}`)',
+    },
+    addedToQueuePlaylist: 'Adicionei **{SONGS_QUANTITY}** músicas de [{PLAYLIST_TITLE}]({PLAYLIST_URL}) ({PLAYLIST_SOURCE}) à fila',
+    addedToQueueSong: 'Adicionei **[{TRACK_TITLE}]({TRACK_URL})** ({TRACK_URL}) à fila',
+    emptyQueue: 'A fila está vazia.',
+    shuffleQueue: 'Embaralhei a fila.',
+    notPlaying: 'Não estou reproduzindo nada neste servidor.',
+    requestedBy: 'Requisitada por',
+    skipped: 'Pulei **[{TRACK_TITLE}]({TRACK_URL})**',
+    skippedFor: 'Pulei **[{CURRENT_TRACK_TITLE}]({CURRENT_TRACK_URL})** para **[{TRACK_TITLE}]({TRACK_URL})**',
+    skippedBy: 'Pulada por',
+    skipList: 'Mostrando as primeiras {SONGS_QUANTITY} músicas.',
+    disconnectedFromVc: 'Desconectado do canal de voz.',
+    disconnectedBy: '{USER} me desconectou',
+    playingNow: 'Tocando agora',
+    lyrics: {
+        noArgs: 'Você esqueceu de fornecer uma música para buscar.',
+        notFound: 'Não encontrei nada. Tem certeza de que digitou corretamente?',
+    },
+    placeholders: {
+        chooseLang: 'Escolha um idioma.',
+        chooseFilter: 'Ative ou desative os filtros de áudio.',
+    },
+    actions: {
+        pause: 'Pausar',
+        resume: 'Continuar',
+        skip: 'Pular',
+        disconnect: 'Desconectar',
+        showQueue: 'Mostrar Fila',
+    },
+    generics: {
+        playing: 'Tocando',
+        help: 'Ajuda',
+        views: 'Visualizações',
+        page: 'Página',
+        now: 'agora',
+        of: 'de',
+    },
+};

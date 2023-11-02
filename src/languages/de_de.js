@@ -1,0 +1,47 @@
+module.exports = {
+    player: {
+        notInVc: 'Du befindest dich nicht in einem Sprachkanal',
+        notSameVc: 'Du befindest dich nicht im selben Sprachkanal wie ich',
+        notEnoughPermissions: 'Der Bot hat keine Berechtigungen, um dem Sprachkanal beizutreten',
+        noTracks: 'Ich konnte nichts finden. \nEs könnte altersbeschränkt oder in diesem Land blockiert sein',
+    },
+    commands: {
+        notEnoughPermissions: 'Du hast nicht ausreichende Berechtigungen, um diesen Befehl auszuführen (`{PERMISSION}`)',
+    },
+    addedToQueuePlaylist: 'Ich habe **{SONGS_QUANTITY}** Lieder von [{PLAYLIST_TITLE}]({PLAYLIST_URL}) ({PLAYLIST_SOURCE}) in die Warteschlange gestellt',
+    addedToQueueSong: 'Ich habe **[{TRACK_TITLE}]({TRACK_URL})** ({TRACK_SOURCE}) in die Warteschlange gestellt',
+    emptyQueue: 'Die Warteschlange ist leer',
+    shuffleQueue: 'Ich habe die Warteschlange gemischt',
+    notPlaying: 'Ich spiele nichts auf diesem Server',
+    requestedBy: 'Angefordert von',
+    skipped: 'Übersprungen **[{TRACK_TITLE}]({TRACK_URL})**',
+    skippedFor: 'Übersprungen **[{CURRENT_TRACK_TITLE}]({CURRENT_TRACK_URL})** für **[{TRACK_TITLE}]({TRACK_URL})**',
+    skippedBy: 'Übersprungen von',
+    skipList: 'Zeige nur die ersten {SONGS_QUANTITY} Lieder',
+    disconnectedFromVc: 'Vom Sprachkanal getrennt',
+    disconnectedBy: 'Wurde von {USER} getrennt',
+    playingNow: 'Jetzt wird abgespielt',
+    lyrics: {
+        noArgs: 'Du hast vergessen, ein Lied zum Suchen anzugeben',
+        notFound: 'Ich konnte nichts finden. Bist du sicher, dass du es korrekt eingegeben hast?',
+    },
+    placeholders: {
+        chooseLang: 'Wähle eine Sprache aus',
+        chooseFilter: 'Aktiviere oder deaktiviere Audiofilter',
+    },
+    actions: {
+        pause: 'Pause',
+        resume: 'Fortsetzen',
+        skip: 'Überspringen',
+        disconnect: 'Trennen',
+        showQueue: 'Warteschlange anzeigen',
+    },
+    generics: {
+        playing: 'Spielen',
+        help: 'Hilfe',
+        views: 'Aufrufe',
+        page: 'Seite',
+        now: 'jetzt',
+        of: 'von',
+    },
+};
