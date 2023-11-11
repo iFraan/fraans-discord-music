@@ -6,40 +6,33 @@ const lyricsFinder = lyricsExtractor();
 const { getLanguage } = require("../utils/language");
 
 module.exports = new Command({
-    name: "lyrics",
-    description: "Trae la letra de una canción, por defecto la que se está reproduciendo.",
+    name: 'lyrics',
+    description: 'Trae la letra de una canción, por defecto la que se está reproduciendo.',
     options: [
         {
             type: ApplicationCommandOptionType.String,
-            name: "busqueda",
-            description: "La canción a buscar",
+            name: 'busqueda',
+            description: 'La canción a buscar',
             required: false,
         },
     ],
     async run(Bot, message, args, extra = {}) {
-        const { isFromButton = false } = extra;
-
-        message.deferReply && await message.deferReply(); // if interaction
+        message.deferReply && (await message.deferReply()); // if interaction
 
         const strings = getLanguage(message.guild.id);
 
         const reply = (content) => {
-            return isFromButton
-                ? message.channel.send(content)
-                : message.editReply(content);
-        }
+            return message.editReply(content);
+        };
 
         const queue = useQueue(message.guild);
-        const query = message.options.getString("busqueda", false) ?? queue?.currentTrack?.title;
+        const query = message?.options?.getString('busqueda', false) ?? queue?.currentTrack?.title;
 
         if (!query) return reply({ embeds: [new EmbedBuilder().setDescription(strings.lyrics.noArgs)] });
 
         const queryFormated = query
             .toLowerCase()
-            .replace(
-                /\(lyrics|lyric|official music video|official video hd|official video|audio|official|clip officiel|clip|extended|hq\)/g,
-                ""
-            );
+            .replace(/\(lyrics|lyric|official music video|official video hd|official video|audio|official|clip officiel|clip|extended|hq\)/g, '');
 
         const result = await lyricsFinder.search(queryFormated).catch(() => null);
 
@@ -48,8 +41,7 @@ module.exports = new Command({
             return reply({ embeds: [embed] });
         }
 
-        const lyrics =
-            result.lyrics.length > 4096 ? `${result.lyrics.slice(0, 4090)}...` : result.lyrics;
+        const lyrics = result.lyrics.length > 4096 ? `${result.lyrics.slice(0, 4090)}...` : result.lyrics;
 
         const embed = new EmbedBuilder()
             .setTitle(result.title)
@@ -62,6 +54,6 @@ module.exports = new Command({
             })
             .setDescription(lyrics);
 
-        return reply({ embeds: [embed] })
+        return reply({ embeds: [embed] });
     },
 });

@@ -56,11 +56,7 @@ module.exports = async (Bot, interaction) => {
                 queue.delete(true);
                 break;
             case 'buttoncontrol_next':
-                embed.setDescription(
-                    strings.skippedFor
-                        .replace('{TRACK_TITLE}', queue.currentTrack.title)
-                        .replace('{TRACK_URL}', queue.currentTrack.url)
-                );
+                embed.setDescription(strings.skippedFor.replace('{TRACK_TITLE}', queue.currentTrack.title).replace('{TRACK_URL}', queue.currentTrack.url));
                 embed.setColor(colors['skipped']);
                 embed.setFooter({ text: `Skipeada por ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
@@ -69,16 +65,18 @@ module.exports = async (Bot, interaction) => {
                 break;
             case 'buttoncontrol_skip':
                 /* run skip command */
-                Bot.commands.find((x) => x.name.toLowerCase() == 'skip')
-                    .run(Bot, interaction, ['skip'], { isFromButton: true });
+                Bot.commands.find((x) => x.name.toLowerCase() == 'skip').run(Bot, interaction, ['skip'], { isFromButton: true });
                 await interaction.deferUpdate();
                 break;
             case 'buttoncontrol_queue':
                 /* run queue command */
-                Bot.commands.find((x) => x.name.toLowerCase() == 'queue')
-                    .run(Bot, interaction, ['queue'], { slash: false, isFromButton: true });
+                Bot.commands.find((x) => x.name.toLowerCase() == 'queue').run(Bot, interaction, ['queue'], { slash: false, isFromButton: true });
                 await interaction.deferUpdate();
                 break;
+            case 'buttoncontrol_lyrics':
+                Bot.commands.find((x) => x.name.toLowerCase() == 'lyrics').run(Bot, interaction, ['lyrics'], { isFromButton: true });
+                break;
+            
         }
     }
     /* select menu */

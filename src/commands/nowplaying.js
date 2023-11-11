@@ -36,7 +36,7 @@ module.exports = new Command({
         const attachment = new AttachmentBuilder(buffer, { name: `card.png` });
 
         const row = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setCustomId('lyrics').setLabel(`⏵︎ ${strings.actions.searchLyrics}`).setStyle(ButtonStyle.Success),
+            new ButtonBuilder().setCustomId('buttoncontrol_lyrics').setLabel(`⏵︎ ${strings.actions.searchLyrics}`).setStyle(ButtonStyle.Success),
             new ButtonBuilder().setCustomId('buttoncontrol_skip').setLabel(`${strings.actions.skip} ⏭`).setStyle(ButtonStyle.Primary),
             new ButtonBuilder().setCustomId('buttoncontrol_queue').setLabel(`⊙ ${strings.actions.showQueue}`).setStyle(ButtonStyle.Secondary),
             new ButtonBuilder().setLabel(`URL`).setURL(track.url).setStyle(ButtonStyle.Link),
