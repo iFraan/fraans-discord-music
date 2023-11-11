@@ -35,6 +35,7 @@ module.exports = {
         skip: 'Saltar',
         disconnect: 'Desconectar',
         showQueue: 'Mostrar Lista',
+        searchLyrics: 'Buscar la letra',
     },
     generics: {
         playing: 'Reproduciendo',

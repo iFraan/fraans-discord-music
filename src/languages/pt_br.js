@@ -35,6 +35,7 @@ module.exports = {
         skip: 'Pular',
         disconnect: 'Desconectar',
         showQueue: 'Mostrar Fila',
+        searchLyrics: 'Pesquisar Letras',
     },
     generics: {
         playing: 'Tocando',

@@ -1,8 +1,8 @@
+const { EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { musicCard } = require('musicard');
 const Command = require('../structures/command.js');
-const { colors } = require('../constants');
 const { getTrackTitle } = require('../utils/player');
-const { getLanguage } = require("../utils/language");
-const { EmbedBuilder } = require('discord.js');
+const { getLanguage } = require('../utils/language');
 
 module.exports = new Command({
     name: 'nowplaying',
@@ -15,42 +15,36 @@ module.exports = new Command({
             const embed = new EmbedBuilder().setDescription(strings.notPlaying);
             return message.reply({ embeds: [embed] });
         }
-        const progress = queue.node.createProgressBar({ timecodes: true, length: 8 });
 
         const track = queue.currentTrack;
         const title = getTrackTitle(track);
 
+        const progress = parseInt((queue.node.estimatedPlaybackTime / queue.node.totalDuration) * 100);
+
+        const card = new musicCard()
+            .setName(title)
+            .setAuthor(track.author)
+            .setColor('auto')
+            .setTheme('classic')
+            .setBrightness(80)
+            .setThumbnail(track.thumbnail)
+            .setProgress(progress)
+            .setStartTime(`${strings.requestedBy} ${track.requestedBy.username}`)
+            .setEndTime(track.duration);
+
+        const buffer = await card.build();
+        const attachment = new AttachmentBuilder(buffer, { name: `card.png` });
+
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId('buttoncontrol_lyrics').setLabel(`⏵︎ ${strings.actions.searchLyrics}`).setStyle(ButtonStyle.Success),
+            new ButtonBuilder().setCustomId('buttoncontrol_skip').setLabel(`${strings.actions.skip} ⏭`).setStyle(ButtonStyle.Primary),
+            new ButtonBuilder().setCustomId('buttoncontrol_queue').setLabel(`⊙ ${strings.actions.showQueue}`).setStyle(ButtonStyle.Secondary),
+            new ButtonBuilder().setLabel(`URL`).setURL(track.url).setStyle(ButtonStyle.Link),
+        );
+
         return message.reply({
-            embeds: [
-                {
-                    author: {
-                        name: title,
-                        url: track.url,
-                    },
-                    // description: `**[${title}](${track.url})**\nPedido por ${track.requestedBy}`,
-                    thumbnail: {
-                        url: `${track.thumbnail}`,
-                    },
-                    fields: [
-                        {
-                            name: `${strings.requestedBy}:`,
-                            value: `${track.requestedBy.username}#${track.requestedBy.discriminator}`,
-                            inline: true,
-                        },
-                        {
-                            name: `${strings.generics.views}:`,
-                            value: `${track.views}`,
-                            inline: true,
-                        },
-                        {
-                            name: '\u200b',
-                            value: progress.replace(/ 0:00/g, ' ◉ LIVE'),
-                        },
-                    ],
-                    footer: { text: `Fraan's Music | ${strings.generics.playingNow}`, iconURL: 'https://cdn-icons-png.flaticon.com/512/183/183625.png' },
-                    color: colors['now-playing'],
-                },
-            ],
+            components: [row],
+            files: [attachment],
         });
     },
 });

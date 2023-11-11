@@ -35,6 +35,7 @@ module.exports = {
         skip: 'Überspringen',
         disconnect: 'Trennen',
         showQueue: 'Warteschlange anzeigen',
+        searchLyrics: 'Suche Songtexte',
     },
     generics: {
         playing: 'Spielen',
