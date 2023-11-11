@@ -37,13 +37,13 @@ module.exports = async (Bot, interaction) => {
             case 'buttoncontrol_play':
                 isPlaying ? queue.node.pause() : queue.node.resume();
                 queue.metadata?.nowPlayingMessage.edit(
-                    EmbedNowPlaying({
+                    await EmbedNowPlaying({
                         track: queue.currentTrack,
                         isPlaying: !isPlaying,
                         status: isPlaying ? 'paused' : 'resumed',
                         interaction,
                         queue,
-                    })
+                    }),
                 );
                 await interaction.deferUpdate();
                 break;

@@ -1,36 +1,30 @@
+const { musicCard } = require('musicard');
+const { AttachmentBuilder } = require('discord.js');
 const ButtonPlayingBar = require('./ButtonPlayingBar');
 const { getTrackTitle } = require('../../utils/player');
-const { avatarUrlFrom } = require('../../utils/discordapi');
-const { colors } = require('../../constants');
-const { getLanguage } = require("../../utils/language");
+const { getLanguage } = require('../../utils/language');
 
-module.exports = EmbedNowPlaying = ({ track, isPlaying = true, status, interaction = {}, queue }) => {
+module.exports = EmbedNowPlaying = async ({ track, isPlaying = true, status, interaction = {}, queue }) => {
     const strings = getLanguage(queue?.guild?.id ?? '');
     const row = ButtonPlayingBar({ isPlaying, interaction, queue });
     const title = getTrackTitle(track);
-    const description = [`**[${title}](${track.url})** (${track.duration})`];
-    status && description.push(`${status == 'paused' ? 'Pausado' : 'Resumido'} por ${interaction?.user}`);
+
+    const card = new musicCard()
+        .setName(title)
+        .setAuthor(track.author)
+        .setColor('auto')
+        .setTheme('classic')
+        .setBrightness(80)
+        .setThumbnail(track.thumbnail)
+        .setProgress(10)
+        .setStartTime(`${strings.requestedBy} ${track.requestedBy.username}`)
+        .setEndTime(track.duration);
+
+    const buffer = await card.build();
+    const attachment = new AttachmentBuilder(buffer, { name: `card.png` });
+
     return {
-        embeds: [
-            {
-                author: {
-                    name: strings.playingNow,
-                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/183/183625.png',
-                },
-                description: description.join('\n'),
-                footer: {
-                    text: `${strings.requestedBy} ${track.requestedBy.username}#${track.requestedBy.discriminator}`,
-                    iconURL: avatarUrlFrom({
-                        id: track.requestedBy.id,
-                        avatar: track.requestedBy.avatar,
-                    }),
-                },
-                thumbnail: {
-                    url: `${track.thumbnail}`,
-                },
-                color: isPlaying ? colors['now-playing'] : colors['paused'],
-            },
-        ],
         components: [row],
+        files: [attachment],
     };
 };
