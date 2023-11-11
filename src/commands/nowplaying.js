@@ -1,9 +1,8 @@
-const { AttachmentBuilder } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { musicCard } = require('musicard');
 const Command = require('../structures/command.js');
 const { getTrackTitle } = require('../utils/player');
 const { getLanguage } = require('../utils/language');
-const { EmbedBuilder } = require('discord.js');
 
 module.exports = new Command({
     name: 'nowplaying',
@@ -36,7 +35,15 @@ module.exports = new Command({
         const buffer = await card.build();
         const attachment = new AttachmentBuilder(buffer, { name: `card.png` });
 
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setCustomId('lyrics').setLabel(`⏵︎ ${strings.actions.searchLyrics}`).setStyle(ButtonStyle.Success),
+            new ButtonBuilder().setCustomId('buttoncontrol_skip').setLabel(`${strings.actions.skip} ⏭`).setStyle(ButtonStyle.Primary),
+            new ButtonBuilder().setCustomId('buttoncontrol_queue').setLabel(`⊙ ${strings.actions.showQueue}`).setStyle(ButtonStyle.Secondary),
+            new ButtonBuilder().setLabel(`URL`).setURL(track.url).setStyle(ButtonStyle.Link),
+        );
+
         return message.reply({
+            components: [row],
             files: [attachment],
         });
     },
