@@ -70,7 +70,9 @@ npm run start
 | Spanish (Argentina) | ✅      |
 | Spanish (Spain)     | ✅      |
 | English (US)        | ✅      |
-| German              | ⬜      |
+| German              | ✅      |
+| Português (Brasil)  | ✅      |
+| Italian             | ⬜      |
 
 ## Sites
 
