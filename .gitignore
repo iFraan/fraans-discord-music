@@ -5,6 +5,7 @@ keys.json
 
 # 
 .env
+/dist
 
 # db
 *.sqlite

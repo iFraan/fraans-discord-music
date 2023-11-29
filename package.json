@@ -37,5 +37,10 @@
         "ffmpeg-static": "^5.2.0",
         "musicard": "^1.5.2",
         "play-dl": "^1.9.7"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.1",
+        "tsup": "^8.0.1",
+        "typescript": "^5.3.2"
     }
 }
