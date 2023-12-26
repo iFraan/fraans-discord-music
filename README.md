@@ -57,11 +57,12 @@ npm run start
 | Playlist Support                             | ✅                       |
 | Audio Filters                                | ✅                       |
 | Skip (select menu with queue && number)      | ✅                       |
-| DJ Roles                                     | ⬜                       |
+| DJ Roles                                     | 🗓️                       |
 | Lyrics                                       | ✅                       |
 | Shuffle                                      | ✅                       |
-| AutoPlay (similar tracks after end of queue) | 🗓️                       |
+| AutoPlay (similar tracks after end of queue) | ✅                       |
 | Multi-Language Support                       | ✅                       |
+| More...                                      | ⬜                       |
 
 ## Language Support
 
@@ -72,7 +73,7 @@ npm run start
 | English (US)        | ✅      |
 | German              | ✅      |
 | Português (Brasil)  | ✅      |
-| Italian             | ⬜      |
+| More...             | ⬜      |
 
 ## Sites
 
