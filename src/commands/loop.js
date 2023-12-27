@@ -1,4 +1,4 @@
-const { ActionRowBuilder, StringSelectMenuBuilder, } = require("discord.js");
+const { ActionRowBuilder, StringSelectMenuBuilder, EmbedBuilder, } = require("discord.js");
 const { QueueRepeatMode, useQueue } = require('discord-player');
 const Command = require('../structures/command.js');
 const GuildDB = require('../db/guilds.js');
@@ -17,15 +17,25 @@ module.exports = new Command({
     async run(Bot, message, args, extra = {}) {
 
         const { isFromButton = false, selectedRepeatMode } = extra;
-        const [selected] = selectedRepeatMode ?? [QueueRepeatMode.QUEUE];
         const queue = useQueue(message.guild);
+        const strings = getLanguage(message.guild.id);
+
+        const embedReply = (content) => {
+            return isFromButton ? message.channel.send(content) : message.reply(content);
+        };
+
+        if (!queue || !queue.node.isPlaying()) {
+            const embed = new EmbedBuilder().setDescription(strings.notPlaying);
+            return embedReply({ embeds: [embed] });
+        }
+
+        const [selected] = selectedRepeatMode ?? [QueueRepeatMode.QUEUE];
 
         if (isFromButton && selected) {
             queue.setRepeatMode(parseInt(selected))
             return GuildDB.set(message.guild.id, { repeatMode: selected.toString() });
         };
 
-        const strings = getLanguage(message.guild.id);
         const { repeatMode } = GuildDB.get(message.guild.id);
 
         const row = new ActionRowBuilder().addComponents(
@@ -43,7 +53,7 @@ module.exports = new Command({
                 }))
         );
 
-        return !isFromButton && message.reply({
+        return !isFromButton && embedReply({
             components: [row]
         })
     },
