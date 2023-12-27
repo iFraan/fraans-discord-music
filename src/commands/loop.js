@@ -17,26 +17,26 @@ module.exports = new Command({
     async run(Bot, message, args, extra = {}) {
 
         const { isFromButton = false, selectedRepeatMode } = extra;
-        const [selected] = selectedRepeatMode ?? QueueRepeatMode.QUEUE;
+        const [selected] = selectedRepeatMode ?? [QueueRepeatMode.QUEUE];
 
         if (isFromButton && selected) {
-            return GuildDB.set(message.guild.id, { repeatMode: selected });
+            return GuildDB.set(message.guild.id, { repeatMode: selected.toString() });
         };
 
         const { repeatMode } = GuildDB.get(message.guild.id);
-        const strings = getLanguage(message.guild.id)
+        const strings = getLanguage(message.guild.id);
 
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
-                .setCustomId("repeatMode")
+                .setCustomId("loop")
                 .setPlaceholder(strings.placeholders.repeatMode)
                 .setMinValues(1)
                 .setMaxValues(1)
-                .addOptions(LOOPMODES.map((lang) => {
+                .addOptions(LOOPMODES.map((loop) => {
                     return ({
-                        label: lang.label,
-                        value: lang.value.toLowerCase(),
-                        default: lang.value === repeatMode
+                        label: loop.label,
+                        value: loop.value.toString(),
+                        default: loop.value.toString() === repeatMode
                     })
                 }))
         );

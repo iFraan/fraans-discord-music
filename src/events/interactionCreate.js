@@ -76,7 +76,7 @@ module.exports = async (Bot, interaction) => {
             case 'buttoncontrol_lyrics':
                 Bot.commands.find((x) => x.name.toLowerCase() == 'lyrics').run(Bot, interaction, ['lyrics'], { isFromButton: true });
                 break;
-            
+
         }
     }
     /* select menu */
@@ -89,15 +89,21 @@ module.exports = async (Bot, interaction) => {
                 await interaction.deferUpdate();
                 break;
             case 'filters':
-                /* run skip command */
+                /* run filters command */
                 Bot.commands.find((x) => x.name.toLowerCase() == 'filters')
                     .run(Bot, interaction, ['filters'], { isFromButton: true, selectedFilters: interaction.values });
                 await interaction.deferUpdate();
                 break;
             case 'languages':
-                /* run skip command */
+                /* run languages command */
                 Bot.commands.find((x) => x.name.toLowerCase() == 'languages')
                     .run(Bot, interaction, ['languages'], { isFromButton: true, selectedLang: interaction.values });
+                await interaction.deferUpdate();
+                break;
+            case 'loop':
+                /* run loop command */
+                Bot.commands.find((x) => x.name.toLowerCase() == 'loop')
+                    .run(Bot, interaction, ['loop'], { isFromButton: true, selectedRepeatMode: interaction.values });
                 await interaction.deferUpdate();
                 break;
         }
