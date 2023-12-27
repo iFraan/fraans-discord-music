@@ -1,5 +1,5 @@
 const { ActionRowBuilder, StringSelectMenuBuilder, } = require("discord.js");
-const { QueueRepeatMode } = require('discord-player')
+const { QueueRepeatMode, useQueue } = require('discord-player');
 const Command = require('../structures/command.js');
 const GuildDB = require('../db/guilds.js');
 const { getLanguage } = require("../utils/language");
@@ -18,13 +18,15 @@ module.exports = new Command({
 
         const { isFromButton = false, selectedRepeatMode } = extra;
         const [selected] = selectedRepeatMode ?? [QueueRepeatMode.QUEUE];
+        const queue = useQueue(message.guild);
 
         if (isFromButton && selected) {
+            queue.setRepeatMode(parseInt(selected))
             return GuildDB.set(message.guild.id, { repeatMode: selected.toString() });
         };
 
-        const { repeatMode } = GuildDB.get(message.guild.id);
         const strings = getLanguage(message.guild.id);
+        const { repeatMode } = GuildDB.get(message.guild.id);
 
         const row = new ActionRowBuilder().addComponents(
             new StringSelectMenuBuilder()
