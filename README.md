@@ -47,6 +47,8 @@ npm run start
 
 ![](screenshots/filters_open.png)
 
+![](screenshots/languages.png)
+
 ## Features
 
 | Feature                                      | Status                  |
@@ -66,14 +68,15 @@ npm run start
 
 ## Language Support
 
-| Language            | Status |
-| ------------------- | ------ |
-| Spanish (Argentina) | ✅      |
-| Spanish (Spain)     | ✅      |
-| English (US)        | ✅      |
-| German              | ✅      |
-| Português (Brasil)  | ✅      |
-| More...             | ⬜      |
+| Language                    | Status |
+| --------------------------- | ------ |
+| Spanish (Argentina)         | ✅      |
+| Spanish (Argentina Villera) | ✅      |
+| Spanish (Spain)             | ✅      |
+| English (US)                | ✅      |
+| German                      | ✅      |
+| Português (Brasil)          | ✅      |
+| More...                     | ⬜      |
 
 ## Sites
 
