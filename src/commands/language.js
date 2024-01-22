@@ -4,6 +4,7 @@ const GuildDB = require('../db/guilds.js');
 const { getLanguage } = require("../utils/language");
 const LANGUAGES = [
     { label: 'Español (Argentina)', value: 'es_ar' },
+    { label: 'Español Villero (Argentina)', value: 'es_ar_calle' },
     { label: 'Español (España)', value: 'es_es' },
     { label: 'English (US)', value: 'en_us' },
     { label: 'German', value: 'de_de' },
