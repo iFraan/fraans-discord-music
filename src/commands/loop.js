@@ -16,7 +16,7 @@ module.exports = new Command({
     description: "Cambia el modo de reproducción.",
     async run(Bot, message, args, extra = {}) {
 
-        const { isFromButton = false, selectedRepeatMode } = extra;
+        const { isFromButton = false, options } = extra;
         const queue = useQueue(message.guild);
         const strings = getLanguage(message.guild.id);
 
@@ -29,7 +29,7 @@ module.exports = new Command({
             return embedReply({ embeds: [embed] });
         }
 
-        const [selected] = selectedRepeatMode ?? [QueueRepeatMode.QUEUE];
+        const [selected] = options ?? [QueueRepeatMode.QUEUE];
 
         if (isFromButton && selected) {
             queue.setRepeatMode(parseInt(selected))

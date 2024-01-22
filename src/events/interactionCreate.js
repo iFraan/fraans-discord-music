@@ -85,25 +85,25 @@ module.exports = async (Bot, interaction) => {
             case 'skip':
                 /* run skip command */
                 Bot.commands.find((x) => x.name.toLowerCase() == 'skip')
-                    .run(Bot, interaction, ['skip'], { isFromButton: true, skipTo: interaction.values[0] });
+                    .run(Bot, interaction, ['skip'], { isFromButton: true, options: interaction.values });
                 await interaction.deferUpdate();
                 break;
             case 'filters':
                 /* run filters command */
                 Bot.commands.find((x) => x.name.toLowerCase() == 'filters')
-                    .run(Bot, interaction, ['filters'], { isFromButton: true, selectedFilters: interaction.values });
+                    .run(Bot, interaction, ['filters'], { isFromButton: true, options: interaction.values });
                 await interaction.deferUpdate();
                 break;
             case 'languages':
                 /* run languages command */
                 Bot.commands.find((x) => x.name.toLowerCase() == 'languages')
-                    .run(Bot, interaction, ['languages'], { isFromButton: true, selectedLang: interaction.values });
+                    .run(Bot, interaction, ['languages'], { isFromButton: true, options: interaction.values });
                 await interaction.deferUpdate();
                 break;
             case 'loop':
                 /* run loop command */
                 Bot.commands.find((x) => x.name.toLowerCase() == 'loop')
-                    .run(Bot, interaction, ['loop'], { isFromButton: true, selectedRepeatMode: interaction.values });
+                    .run(Bot, interaction, ['loop'], { isFromButton: true, options: interaction.values });
                 await interaction.deferUpdate();
                 break;
         }

@@ -19,7 +19,8 @@ module.exports = new Command({
     ],
     async run(Bot, message, args, extra = {}) {
         const strings = getLanguage(message.guild.id);
-        const { isFromButton = false, skipTo: _skipTo } = extra;
+        const { isFromButton = false, options } = extra;
+        const [selected] = options ?? [];
         const optionsIndex = message?.options?.getInteger('indice')
             ? message.options.getInteger('indice') - 1
             : undefined;
@@ -40,7 +41,7 @@ module.exports = new Command({
 
         const skipTo =
             (queue.tracks.data.length === 1 ? 0 : undefined) ?? // auto skips when only one song is in queue
-            _skipTo ??
+            selected ??
             optionsIndex;
 
         /* typeof so we can pass '0' as the condition */
