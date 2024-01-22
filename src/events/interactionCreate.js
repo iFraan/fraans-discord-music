@@ -1,6 +1,6 @@
+const { EmbedBuilder, InteractionType, ComponentType } = require('discord.js');
 const { EmbedNowPlaying } = require('../lib/components');
 const { colors } = require('../constants');
-const { EmbedBuilder, InteractionType, ComponentType } = require('discord.js');
 const { getLanguage } = require("../utils/language.js");
 
 // todo: improve/re-factor/re-do handler for interactios
@@ -79,7 +79,7 @@ module.exports = async (Bot, interaction) => {
 
         }
     }
-    /* select menu */
+    /* ----- Select Menu ----- */
     if (interaction.isStringSelectMenu()) {
         const cmd = Bot.commands.find((x) => x.name.toLowerCase() === interaction.customId);
         if (cmd) {
