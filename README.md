@@ -47,6 +47,8 @@ npm run start
 
 ![](screenshots/filters_open.png)
 
+![](screenshots/languages.png)
+
 ## Features
 
 | Feature                                      | Status                  |
@@ -57,22 +59,24 @@ npm run start
 | Playlist Support                             | ✅                       |
 | Audio Filters                                | ✅                       |
 | Skip (select menu with queue && number)      | ✅                       |
-| DJ Roles                                     | ⬜                       |
+| DJ Roles                                     | 🗓️                       |
 | Lyrics                                       | ✅                       |
 | Shuffle                                      | ✅                       |
-| AutoPlay (similar tracks after end of queue) | 🗓️                       |
+| AutoPlay (similar tracks after end of queue) | ✅                       |
 | Multi-Language Support                       | ✅                       |
+| More...                                      | ⬜                       |
 
 ## Language Support
 
-| Language            | Status |
-| ------------------- | ------ |
-| Spanish (Argentina) | ✅      |
-| Spanish (Spain)     | ✅      |
-| English (US)        | ✅      |
-| German              | ✅      |
-| Português (Brasil)  | ✅      |
-| Italian             | ⬜      |
+| Language                    | Status |
+| --------------------------- | ------ |
+| Spanish (Argentina)         | ✅      |
+| Spanish (Argentina Villera) | ✅      |
+| Spanish (Spain)             | ✅      |
+| English (US)                | ✅      |
+| German                      | ✅      |
+| Português (Brasil)          | ✅      |
+| More...                     | ⬜      |
 
 ## Sites
 

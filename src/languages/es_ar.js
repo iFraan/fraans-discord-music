@@ -28,6 +28,7 @@ module.exports = {
     placeholders: {
         chooseLang: 'Elegí un idioma.',
         chooseFilter: 'Activá o desactivá filtros.',
+        repeatMode: 'Elegí un modo de repetición.',
     },
     actions: {
         pause: 'Pausar',

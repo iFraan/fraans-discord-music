@@ -1,7 +1,4 @@
-const {
-    ActionRowBuilder,
-    StringSelectMenuBuilder,
-} = require("discord.js");
+const { ActionRowBuilder, StringSelectMenuBuilder, EmbedBuilder } = require("discord.js");
 const Command = require("../structures/command.js");
 const { useQueue } = require("discord-player");
 const { getLanguage } = require("../utils/language");
@@ -38,12 +35,21 @@ module.exports = new Command({
     description: "Activá o desactivá efectos de audio.",
     async run(Bot, message, args, extra = {}) {
 
-        const { isFromButton = false, selectedFilters = [] } = extra;
+        const { isFromButton = false, options = [] } = extra;
 
         const queue = useQueue(message.guild);
         const strings = getLanguage(message.guild.id);
 
-        queue.filters.ffmpeg.setFilters(selectedFilters)
+        const reply = (content) => {
+            isFromButton ? message.channel.send(content) : message.reply(content);
+        };
+
+        if (!queue || !queue.node.isPlaying()) {
+            const embed = new EmbedBuilder().setDescription(strings.notPlaying);
+            return reply({ embeds: [embed] });
+        }
+
+        queue.filters.ffmpeg.setFilters(options)
 
         const filters = {
             enabled: queue.filters.ffmpeg.getFiltersEnabled(),

@@ -28,6 +28,7 @@ module.exports = {
     placeholders: {
         chooseLang: 'Choose a language.',
         chooseFilter: 'Enable or disable audio filters.',
+        repeatMode: 'Choose a repeat mode.',
     },
     actions: {
         pause: 'Pause',

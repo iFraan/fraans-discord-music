@@ -1,6 +1,6 @@
+const { EmbedBuilder, InteractionType, ComponentType } = require('discord.js');
 const { EmbedNowPlaying } = require('../lib/components');
 const { colors } = require('../constants');
-const { EmbedBuilder, InteractionType, ComponentType } = require('discord.js');
 const { getLanguage } = require("../utils/language.js");
 
 // todo: improve/re-factor/re-do handler for interactios
@@ -76,30 +76,15 @@ module.exports = async (Bot, interaction) => {
             case 'buttoncontrol_lyrics':
                 Bot.commands.find((x) => x.name.toLowerCase() == 'lyrics').run(Bot, interaction, ['lyrics'], { isFromButton: true });
                 break;
-            
+
         }
     }
-    /* select menu */
+    /* ----- Select Menu ----- */
     if (interaction.isStringSelectMenu()) {
-        switch (interaction.customId) {
-            case 'skip':
-                /* run skip command */
-                Bot.commands.find((x) => x.name.toLowerCase() == 'skip')
-                    .run(Bot, interaction, ['skip'], { isFromButton: true, skipTo: interaction.values[0] });
-                await interaction.deferUpdate();
-                break;
-            case 'filters':
-                /* run skip command */
-                Bot.commands.find((x) => x.name.toLowerCase() == 'filters')
-                    .run(Bot, interaction, ['filters'], { isFromButton: true, selectedFilters: interaction.values });
-                await interaction.deferUpdate();
-                break;
-            case 'languages':
-                /* run skip command */
-                Bot.commands.find((x) => x.name.toLowerCase() == 'languages')
-                    .run(Bot, interaction, ['languages'], { isFromButton: true, selectedLang: interaction.values });
-                await interaction.deferUpdate();
-                break;
+        const cmd = Bot.commands.find((x) => x.name.toLowerCase() === interaction.customId);
+        if (cmd) {
+            cmd.run(Bot, interaction, [interaction.customId], { isFromButton: true, options: interaction.values });
+            await interaction.deferUpdate();
         }
     }
 };
