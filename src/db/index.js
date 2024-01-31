@@ -3,4 +3,4 @@ const db = {};
 
 db.guilds = new enmap('Guilds');
 
-module.exports = db
+module.exports = db;

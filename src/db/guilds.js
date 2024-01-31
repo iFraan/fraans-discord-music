@@ -1,4 +1,14 @@
+const { QueueRepeatMode } = require('discord-player');
 const db = require('../db');
+
+/**
+ * A database guild object
+ * @typedef {Object} Guild
+ * @property {string} created_at - A date string, indicating when was created.
+ * @property {string} updated_at - A date string, indicating when was updated.
+ * @property {string?} language - The language selected, in ISO format (en-us).
+ * @property {QueueRepeatMode?} repeatMode - The repeat mode selected.
+ */
 
 const ensure = (guild) => db.guilds.ensure(guild, { created_at: new Date().toString() });
 
