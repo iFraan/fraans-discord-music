@@ -7,6 +7,7 @@ const db = require('../db');
  * @property {string} created_at - A date string, indicating when was created.
  * @property {string} updated_at - A date string, indicating when was updated.
  * @property {string?} language - The language selected, in ISO format (en-us).
+ * @property {string?} djRole - The DJ Role defined.
  * @property {QueueRepeatMode?} repeatMode - The repeat mode selected.
  */
 
