@@ -1,6 +1,6 @@
 {
     "name": "fraans-discord-music",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "license": "GPL-3.0",
     "description": "A music bot written using discord.js@14 and discord-player",
     "main": "index.js",

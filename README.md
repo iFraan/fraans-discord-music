@@ -18,6 +18,7 @@ Package:
 -   discord.js@14
 -   discord-player@6
 -   play-dl
+-	musicard@2
 
 ## Installation
 
