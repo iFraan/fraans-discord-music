@@ -80,7 +80,7 @@ module.exports = async (Bot, interaction) => {
         }
     }
     /* ----- Select Menu ----- */
-    if (interaction.isStringSelectMenu()) {
+    if ([ComponentType.RoleSelect, ComponentType.StringSelect].includes(interaction.componentType)) {
         const cmd = Bot.commands.find((x) => x.name.toLowerCase() === interaction.customId);
         if (cmd) {
             cmd.run(Bot, interaction, [interaction.customId], { isFromButton: true, options: interaction.values });
