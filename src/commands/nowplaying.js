@@ -16,7 +16,7 @@ module.exports = new Command({
             return message.reply({ embeds: [embed] });
         }
 
-        await message.deferReply({ ephemeral: true });
+        await message.deferReply();
 
         const track = queue.currentTrack;
         const title = getTrackTitle(track);
